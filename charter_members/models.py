@@ -10,7 +10,7 @@ class Position(models.Model):
 
 
 class Attorney(models.Model):
-    bio = models.TextField(blank=True, null=True)
+    biography = models.TextField(blank=True, null=True)
     email = models.CharField(max_length=255, blank=True, null=True)
     front_page = models.BooleanField(default=False)
     image = models.ImageField(upload_to='portraits', default='silhouette.png')
