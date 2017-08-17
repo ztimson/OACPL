@@ -1,0 +1,83 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="The Ontario Association of Child Protection Lawyers started in Spring 2017 in Windsor, Ontario with a group of Family Lawyers who saw a need to increase the level of advocacy for children, families, and communities that were struggling in terms of Child Welfare. ">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OACPL{% if title %} - {{ title }}{% endif %}</title>
+    <link rel="icon" type="image/png" href="{% static 'main/img/logo.png' %}"/>
+    <link rel="stylesheet" href="{% static 'main/css/index.css' %}"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway"/>
+    <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.1/esm/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+
+    {% block head %}
+    {% endblock %}
+</head>
+
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white py-4">
+    <div class="container">
+        <a class="navbar-brand text-dark-primary" href="/">
+            <img src="{% static 'main/img/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+            <div class="d-inline-block">
+                ONTARIO ASSOCIATION OF
+                <br>
+                CHILD PROTECTION LAWYERS
+            </div>
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item text-dark-primary">
+                    <a class="nav-link" href="/">HOME</a>
+                </li>
+                <li class="nav-item text-dark-primary">
+                    <a class="nav-link" href="#">INFORMATION</a>
+                </li>
+                <li class="nav-item text-dark-primary">
+                    <a class="nav-link" href="#">OUR OBJECTIVES</a>
+                </li>
+                <li class="nav-item text-dark-primary">
+                    <a class="nav-link" href="#">ATTORNEYS</a>
+                </li>
+                <li class="nav-item text-dark-primary">
+                    <a class="nav-link" href="#">CONTACT</a>
+                </li>
+                {% if request.user.is_staff %}
+                    <li class="nav-item text-dark-primary">
+                        <a class="nav-link" href="/admin/">ADMIN PANEL</a>
+                    </li>
+                {% endif %}
+                {% if not request.user.is_authenticated %}
+                    <li class="nav-item text-dark-primary">
+                        <a class="nav-link" href="/admin/">LOGIN</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+
+{% block body %}
+{% endblock %}
+
+<!-- Footer -->
+<footer class="container-fluid bg-white text-dark-primary py-3">
+    <div class="container text-center">
+        <p class="mb-0">© 2017 Ontario Association of Child Protection Lawyers.</p>
+    </div>
+</footer>
+
+</body>
+</html>

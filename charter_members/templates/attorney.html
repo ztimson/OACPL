@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row bg-dark-primary">
+            <div class="col-lg-3 ml-auto">
+                <h2 class="d-lg-none text-white mt-3">{{ attorney.name }}</h2>
+                <div class="p-2 my-3 shadow bg-white">
+                    <img class="d-block mx-auto" src="/media/{{ attorney.image }}"/>
+                </div>
+                {% if attorney.phone %}<p class="text-white"><i class="fa fa-phone"> {{ attorney.phone_formatted }}</i></p>{% endif %}
+                {% if attorney.email %}<p class="text-white"><i class="fa fa-envelope"> {{ attorney.email }}</i></p>{% endif %}
+                {% if attorney.website %}<p class="text-white"><i class="fa fa-globe"> {{ attorney.website }}</i></p>{% endif %}
+            </div>
+            <div class="col-lg-6 pt-3 bg-light-blue">
+                <div class="col-lg-6">
+                    <h2 class="d-none d-lg-inline text-dark-primary">{{ attorney.name }}</h2>
+                    <p>{{ attorney.bio }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

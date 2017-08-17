@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    <!-- Home -->
+    <div class="container-fluid baby">
+        <div class="row h-100">
+            <div class="col-5 py-5" style="background-color: rgba(0, 48, 91, 0.65)">
+                <h1 class="float-right d-inline-block mr-5 pl-4 text-white"><strong>
+                    Ontario<br>Association Of<br>Child<br>Protection<br>Lawyers
+                </strong></h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- Information -->
+    <div class="container-fluid bg-light-blue py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-4">
+                    <h2 class="text-dark-primary">INFORMATION FOR THE PUBLIC</h2>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <ul class="mb-0">
+                        <li class="text-dark-primary">FIND A CHILD PROTECTION LAWYER</li>
+                        <li class="text-dark-primary">FIND AN EXPERT</li>
+                        <li class="text-dark-primary">RESEARCH</li>
+                    </ul>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <ul class="mb-0">
+                        <li class="text-dark-primary">BECOME A MEMBER</li>
+                        <li class="text-dark-primary">HOT TOPICS IN CHILD PROTECTION</li>
+                        <li class="text-dark-primary">SEMINARS AND CLE</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Our Objectives -->
+    <div class="container-fluid bg-dark-primary text-white py-5">
+        <div class="container">
+            <div class="row text-center">
+                <h2 class="mx-auto mb-5">OUR OBJECTIVES</h2>
+                The Ontario Association of Child Protection Lawyers started in Spring 2017 in Windsor, Ontario with a
+                group
+                of Family Lawyers who saw a need to increase the level of advocacy for children, families, and
+                communities
+                that were struggling in terms of Child Welfare.
+                <br>
+                <br>
+                The OACPL as an organization seeks to:
+                <br>
+                - increase the efficiency and level of professional expertise offered by Child Protection Lawyers in
+                Ontario
+                <br>
+                - provide public and professional education and input from Recognized Child Protection Lawyers on Child
+                Welfare Reform and Practice
+                <br>
+                - provide an organized body of Recognized Child Protection Lawyers that advocate politically and
+                socially on
+                Child Welfare Matters in Ontario
+                <br>
+                - encourage the highest standards of practice and support for children, families and communities
+                affected by
+                Child Protection Litigation.
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Brake -->
+    <div class="cotainer-fluid hands"></div>
+
+    <!-- Attorneys -->
+    <div class="cotainer-fluid bg-light-blue py-5">
+        <div class="container">
+            <div class="row">
+                <h2 class="mx-auto text-dark-primary">CHARTER MEMBERS</h2>
+            </div>
+            <div class="row">
+                {% for attorney in attorneys %}
+                    <a class="col-4 text-center pt-5" href="/members/{{ attorney.id }}">
+                        <div>
+                            <img class="pb-3" src="/media/{{ attorney.image }}" height="200px"/>
+                            <h5 class="text-dark-primary">{{ attorney.name }}</h5>
+                            <span class="text-light-primary">{{ attorney.position }}</span>
+                            <hr>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="container-fluid architecture text-white">
+        <div class="row h-100">
+            <div class="col-lg-5 py-5" style="background-color: rgba(0, 63, 120, 0.95)">
+                <h1 class="float-lg-right pl-4 d-inline-block mr-5 text-white"><strong>
+                    Ontario <br class="d-none d-lg-inline">Association Of <br class="d-none d-lg-inline"> Child<br class="d-none d-lg-inline"> Protection<br class="d-none d-lg-inline"> Lawyers
+                </strong></h1>
+            </div>
+            <div class="col-lg-7 py-5" style="background-color: rgba(0, 63, 120, 0.8)">
+                <div class="col-lg-8 pl-4">
+                    P.O. BOX 33010
+                    <br>
+                    LAKEVIEW R.O.
+                    <br>
+                    WINDSOR, ONTARIO
+                    <br>
+                    N8Y 0A2
+                    <br>
+                    Phone: (519) 566-1677
+                    <br>
+                    Fax: 1-226-318-0665
+                    <br>
+                    Email Care of David A. Sandor, Barrister & Solicitor, Acting Director:
+                    <br>
+                    david.a.sandor@outlook.com
+                    <br>
+                    <br>
+                    <br>
+                    For any general inquiries, please fill in the following contact form:
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <input class="form-control" placeholder="Name">
+                            <input class="form-control" placeholder="Email">
+                            <input class="form-control" placeholder="Subject">
+                        </div>
+                        <div class="col-lg-6">
+                            <textarea class="form-control h-100" placeholder="Message" rows="4"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="container-fluid bg-dark-primary text-center py-4">
+        <a class="text-white" href="#">
+            <img class="mx-auto" src="{% static 'main/img/arrow.png' %}" style="transform: rotate(180deg)">
+            <br>
+            BACK TO TOP
+        </a>
+    </div>
+{% endblock %}
