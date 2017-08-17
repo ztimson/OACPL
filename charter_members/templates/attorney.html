@@ -6,7 +6,7 @@
             <div class="col-lg-3 ml-auto">
                 <h2 class="d-lg-none text-white mt-3">{{ attorney.name }}</h2>
                 <div class="p-2 my-3 shadow bg-white">
-                    <img class="d-block mx-auto" src="/media/{{ attorney.image }}"/>
+                    <img class="d-block mx-auto" src="/media/{{ attorney.image }}" style="max-width: 100%"/>
                 </div>
                 {% if attorney.phone %}<p class="text-white"><i class="fa fa-phone"> {{ attorney.phone_formatted }}</i></p>{% endif %}
                 {% if attorney.email %}<p class="text-white"><i class="fa fa-envelope"> {{ attorney.email }}</i></p>{% endif %}
