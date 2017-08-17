@@ -13,7 +13,7 @@ class Attorney(models.Model):
     biography = models.TextField(blank=True, null=True)
     email = models.CharField(max_length=255, blank=True, null=True)
     front_page = models.BooleanField(default=False)
-    image = models.ImageField(upload_to='portraits', default='silhouette.png')
+    image = models.ImageField(upload_to='portraits', default='portraits/silhouette.png')
     joined = models.DateField(blank=True, null=True)
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=10, blank=True, null=True)
@@ -21,7 +21,7 @@ class Attorney(models.Model):
     website = models.CharField(max_length=255, blank=True, null=True)
 
     def phone_formatted(self):
-        if self.phone is None: return ''
+        if self.phone is None or self.phone == '': return ''
         return f'({self.phone[:3]}) {self.phone[3:6]}-{self.phone[6:]}'
     phone_formatted.short_description = 'Phone'
 
