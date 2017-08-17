@@ -82,7 +82,7 @@
                 {% for attorney in attorneys %}
                     <a class="col-4 text-center pt-5" href="/members/{{ attorney.id }}">
                         <div>
-                            <img class="pb-3" src="/media/{{ attorney.image }}" height="200px"/>
+                            <img class="pb-3" src="/media/{{ attorney.image }}" style="max-width: 100%; max-height: 200px"/>
                             <h5 class="text-dark-primary">{{ attorney.name }}</h5>
                             <span class="text-light-primary">{{ attorney.position }}</span>
                             <hr>
