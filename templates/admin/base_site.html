@@ -1,0 +1,28 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}OACPL - Admin{% endblock %}
+
+{% block extrahead %}
+    <link rel="icon" type="image/png" href="{% static 'main/img/logo.png' %}"/>
+    <style>
+        #newslettersubscription-group h3 {
+            display: none;
+        }
+
+        #newslettersubscription-group input {
+            transform: translate(-20px, 4px)
+        }
+    </style>
+{% endblock %}
+
+{% block branding %}
+    <div>
+        <a href="{% url 'home' %}">
+            <img src="{% static 'main/img/logo.png' %}" style="display:inline-block; padding-bottom: 20px">
+            <h1 id="site-name" style="display:inline-block">OACPL</h1>
+        </a>
+    </div>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
