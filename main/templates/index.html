@@ -80,7 +80,7 @@
             </div>
             <div class="row">
                 {% for attorney in attorneys %}
-                    <a class="col-4 text-center pt-5" href="/members/{{ attorney.id }}">
+                    <a class="col-4 text-center pt-5" href="{% url 'attorney' attorney.id %}">
                         <div>
                             <img class="pb-3" src="/media/{{ attorney.image }}" style="max-width: 100%; max-height: 200px"/>
                             <h5 class="text-dark-primary">{{ attorney.name }}</h5>

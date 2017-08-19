@@ -15,9 +15,9 @@ def protected_serve(request, path, document_root=None, show_indexes=False):
     return serve(request, path, document_root, show_indexes)
 
 urlpatterns = [
-    url(r'^$', main.views.index),
-    url(r'^admin/', admin.site.urls),
-    url(r'^members/(?P<userId>\d+)', charter_members.views.index),
-    url(r'^media/secure/(?P<path>.*)$', protected_serve, {'document_root': os.path.join(settings.MEDIA_ROOT, 'secure')}),
-    url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT})
+    url(r'^$', main.views.index, name='home'),
+    url(r'^admin/', admin.site.urls, name='admin'),
+    url(r'^attorney/(?P<userId>\d+)', charter_members.views.index, name='attorney'),
+    url(r'^media/secure/(?P<path>.*)$', protected_serve, {'document_root': os.path.join(settings.MEDIA_ROOT, 'secure')}, name='secure media'),
+    url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}, name='media')
 ]
