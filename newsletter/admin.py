@@ -14,7 +14,15 @@ class SubscriberInline(admin.StackedInline):
 
 
 class ExtendUserAdmin(admin.ModelAdmin):
+    list_display = ['username', 'first_name', 'last_name', 'email', 'date_joined', 'newsletter', 'is_staff', 'is_superuser']
+    search_fields = ['username', 'first_name', 'last_name', 'email']
+    list_filter = ['is_staff', 'is_superuser']
     inlines = [SubscriberInline]
+
+    def newsletter(self, obj):
+        print(vars(obj))
+        return bool(True)
+    newsletter.boolean = True
 
 
 admin.site.unregister(User)
