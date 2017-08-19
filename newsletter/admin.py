@@ -1,31 +1,10 @@
 from django.contrib import admin
-from django.contrib.auth.admin import User
 from django.utils import timezone
 
-from .models import Newsletter, NewsletterSubscription
+from .models import Newsletter, Subscriber
 
 
-class SubscriberInline(admin.StackedInline):
-    can_delete = False
-    extra = 1
-    fields = ['subscribed']
-    max_num = 1
-    model = NewsletterSubscription
-
-
-class ExtendUserAdmin(admin.ModelAdmin):
-    list_display = ['username', 'first_name', 'last_name', 'email', 'date_joined', 'newsletter', 'is_staff', 'is_superuser']
-    search_fields = ['username', 'first_name', 'last_name', 'email']
-    list_filter = ['is_staff', 'is_superuser']
-    inlines = [SubscriberInline]
-
-    def newsletter(self, obj):
-        return bool(True)
-    newsletter.boolean = True
-
-
-admin.site.unregister(User)
-admin.site.register(User, ExtendUserAdmin)
+admin.site.register(Subscriber)
 
 
 @admin.register(Newsletter)
