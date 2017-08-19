@@ -2,15 +2,15 @@ from django.contrib import admin
 from django.contrib.auth.admin import User
 from django.utils import timezone
 
-from .models import Newsletter, Subscriber
+from .models import Newsletter, NewsletterSubscription
 
 
 class SubscriberInline(admin.StackedInline):
     can_delete = False
+    extra = 1
     fields = ['subscribed']
     max_num = 1
-    model = Subscriber
-    verbose_name = 'Newsletter'
+    model = NewsletterSubscription
 
 
 class ExtendUserAdmin(admin.ModelAdmin):
@@ -20,7 +20,6 @@ class ExtendUserAdmin(admin.ModelAdmin):
     inlines = [SubscriberInline]
 
     def newsletter(self, obj):
-        print(vars(obj))
         return bool(True)
     newsletter.boolean = True
 

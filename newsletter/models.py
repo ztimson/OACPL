@@ -14,9 +14,6 @@ class Newsletter(models.Model):
         return self.subject
 
 
-class Subscriber(models.Model):
+class NewsletterSubscription(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     subscribed = models.BooleanField(default=False)
-
-    def __str__(self):
-        return ''
