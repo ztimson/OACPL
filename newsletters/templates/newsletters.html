@@ -33,11 +33,10 @@
         $('.newsletter').click(function() {
             var content = $('.newsletter-body', this);
             if(content.css('display') == 'block') {
-                content.slideUp()
+                content.slideUp('fast')
             } else {
-                content.slideDown()
+                content.slideDown('fast')
             }
-
         })
     </script>
 {% endblock %}
