@@ -1,3 +1,8 @@
 from django.shortcuts import render
 
-# Create your views here.
+from .models import Newsletter
+
+
+def newsletters(request):
+    newsletters = Newsletter.objects.all()
+    return render(request, 'newsletters.html', {'newsletters': newsletters})
