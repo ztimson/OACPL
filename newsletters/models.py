@@ -8,6 +8,7 @@ class Newsletter(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     creator = models.ForeignKey(User)
     publish = models.DateTimeField(default=now())
+    sent = models.BooleanField(default=False)
     subject = models.CharField(max_length=255)
 
     def __str__(self):

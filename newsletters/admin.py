@@ -14,11 +14,11 @@ class NewsletterAdmin(admin.ModelAdmin):
 
     def get_form(self, request, obj=None, **kwargs):
         if obj:
-            self.fields = ['creator', 'subject', 'body', 'publish']
-            if obj.publish < timezone.now():
-                self.readonly_fields = ['creator', 'subject', 'body', 'publish']
+            self.fields = ['creator', 'subject', 'body', 'sent', 'publish']
+            if obj.sent:
+                self.readonly_fields = ['creator', 'subject', 'body', 'sent', 'publish']
             else:
-                self.readonly_fields = ['creator']
+                self.readonly_fields = ['creator', 'sent']
         else:
             self.fields = ['subject', 'body', 'publish']
             self.readonly_fields = []

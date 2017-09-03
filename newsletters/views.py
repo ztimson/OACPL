@@ -4,5 +4,5 @@ from .models import Newsletter
 
 
 def newsletters(request):
-    newsletters = Newsletter.objects.all().order_by('-publish')
+    newsletters = Newsletter.objects.filter(sent=True).order_by('-publish')
     return render(request, 'newsletters.html', {'newsletters': newsletters})
