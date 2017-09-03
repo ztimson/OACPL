@@ -16,27 +16,18 @@
         <div class="container py-3">
             {% for newsletter in newsletters %}
                 <div class="col-12 p-0 mb-3 bg-white newsletter">
-                    <div class="p-3 newsletter-header">
+                    <div class="p-3 newsletter-header" data-toggle="collapse" data-target="#newsletter-body-{{ newsletter.id }}" aria-expanded="false" aria-controls="newsletter-body-{{ newsletter.id }}">
                         <h2>{{ newsletter.subject }}</h2>
                         <span class="text-muted">By: {{ newsletter.creator }}</span>
                         <span class="text-muted float-right">{{ newsletter.publish }}</span>
                     </div>
-                    <div class="bg-light-blue p-3 newsletter-body" style="display:none;">
-                        <span>{{ newsletter.body }}</span>
+                    <div  id="newsletter-body-{{ newsletter.id }}" class="bg-light-blue collapse">
+                        <div class="p-3">
+                            {{ newsletter.body }}
+                        </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
-
-    <script>
-        $('.newsletter').click(function() {
-            var content = $('.newsletter-body', this);
-            if(content.css('display') == 'block') {
-                content.slideUp('fast')
-            } else {
-                content.slideDown('fast')
-            }
-        })
-    </script>
 {% endblock %}
