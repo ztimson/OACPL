@@ -22,16 +22,16 @@ class Attorney(models.Model):
 
     def phone_formatted(self):
         if self.phone is None or self.phone == '': return ''
-        return f'({self.phone[:3]}) {self.phone[3:6]}-{self.phone[6:]}'
+        return '({}) {}-{}'.format(self.phone[:3], self.phone[3:6], self.phone[6:])
     phone_formatted.short_description = 'Phone'
 
     def thumbnail(self):
-        return f'<img src="{settings.MEDIA_URL}{str(self.image)}" height="50"/>'
+        return '<img src="{}{}" height="50"/>'.format(settings.MEDIA_URL, str(self.image))
     thumbnail.short_description = 'Image'
     thumbnail.allow_tags = True
 
     def image_preview(self):
-        return f'<img src="{settings.MEDIA_URL}{str(self.image)}"/>'
+        return '<img src="{}{}"/>'.format(settings.MEDIA_URL, str(self.image))
     image_preview.short_description = 'Image'
     image_preview.allow_tags = True
 
