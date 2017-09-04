@@ -2,11 +2,9 @@ from django.db import models
 from django.contrib.auth.admin import User
 from django.utils.timezone import now
 
-from froala_editor.fields import FroalaField
-
 
 class Newsletter(models.Model):
-    body = FroalaField()
+    body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     creator = models.ForeignKey(User)
     publish = models.DateTimeField(default=now())
