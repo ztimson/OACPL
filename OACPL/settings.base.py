@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'forum.apps.ForumConfig',
+    'froala_editor',
     'main.apps.MainConfig',
     'newsletters.apps.NewslettersConfig'
 ]
