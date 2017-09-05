@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    <div class="container-fluid bg-dark-primary p-3">
+        <div class="container">
+            <a class="text-white text-center d-block mx-auto curs-pointer" data-toggle="collapse" data-target="#search-filters" aria-expanded="false" aria-controls="search-filters">
+                Search
+                <br>
+                <img class="mx-auto" src="{% static 'main/img/arrow.png' %}">
+            </a>
+        </div>
+    </div>
+    <div id="search-filters" class="container-fluid bg-dark-primary text-white collapse">
+        <div class="container">
+            <div class="row py-3">
+                {% for header in allHeaders %}
+                    <div class="col-4">
+                        <input id="input-{{ header.id }}" class="curs-pointer" type="checkbox">
+                        <label for="input-{{ header.id }}" class="curs-pointer">{{ header }}</label>
+                    </div>
+                {% endfor %}
+                <div class="col-12">
+                    <button class="btn btn-secondary d-block mx-auto"><i class="fa fa-search"></i> Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid bg-light-blue">
+        <div class="container bg-white p-0">
+            {% if url %}
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'browser' %}"><i class="fa fa-home"></i></a>
+                    </li>
+                    {% for item in urls %}
+                        <li class="breadcrumb-item{% if forloop.last %} active{% endif %}">
+                            <a {% if not forloop.last %}href="{% url 'browser' %}?path={% for item2 in urls %}{% if forloop.counter0 <= forloop.parentloop.counter0%}{{ item }}{% endif %}{% endfor %}"{% endif %}>
+                                {{ item }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ol>
+            {% endif %}
+            <div class="row p-3">
+                <div class="col-lg-12 ml-auto text-dark-primary">
+                    {% if headersCount > 1 %}
+                        <h4>Headings</h4>
+                        <hr>
+                        {% for header in headers %}
+                            <div>
+                                <a href="{% url 'browser' %}?path={% if url %}{{ url }}/{% endif %}{{ header }}">
+                                    <i class="fa fa-folder-open-o fa-2x"></i>
+                                    <h4 class="d-inline-block"> {{ header }}</h4>
+                                </a>
+                            </div>
+                        {% endfor %}
+                        <br>
+                    {% endif %}
+                    <h4>Decisions</h4>
+                    <hr>
+                    {% for decision in decisions %}
+                        <div>
+                            <a href="{% url 'case' decision.id %}">
+                                <i class="fa fa-file-text-o fa-2x"></i>
+                                <h4 class="d-inline-block"> {{ decision.synopsis }}</h4>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid bg-dark-primary p-2">
+        <div class="container text-white">
+            {% if headersCount %}{{ headersCount }} Headers, {% endif %}{{ decisionsCount }} Decision{% if decisionsCount > 1 %}s{% endif %}
+        </div>
+    </div>
+{% endblock %}

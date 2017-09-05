@@ -73,3 +73,11 @@ ul {
 .btn {
     cursor: pointer;
 }
+
+.curs-pointer {
+    cursor: pointer;
+}
+
+.breadcrumb {
+    border-radius: 0 !important;
+}
