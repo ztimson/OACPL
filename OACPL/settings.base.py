@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'bootstrap_admin',
+    'case_law',
     'charter_members.apps.CharterMembersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
