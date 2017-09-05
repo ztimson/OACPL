@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'expert_witnesses',
     'forum.apps.ForumConfig',
     'main.apps.MainConfig',
     'newsletters.apps.NewslettersConfig'
