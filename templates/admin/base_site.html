@@ -5,18 +5,7 @@
 
 {% block extrahead %}
     <link rel="icon" type="image/png" href="{% static 'main/img/logo.png' %}"/>
-    <script src="{% static 'tinymce/js/tinymce/tinymce.min.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script>
-        $(function() {
-            tinymce.init({
-                branding: false,
-                plugins: 'autolink image link print media table imagetools',
-                selector: 'textarea'
-            });
-            console.log('fire');
-        });
-    </script>
     <style>
         #newslettersubscription-group h3 {
             display: none;
