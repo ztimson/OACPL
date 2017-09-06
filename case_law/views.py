@@ -38,4 +38,5 @@ def browser(request):
 
 
 def case(request, id):
-    return render(request)
+    decision = Decision.objects.get(id=id)
+    return render(request, 'decision.html', {'decision': decision})

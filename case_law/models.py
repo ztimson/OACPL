@@ -9,6 +9,12 @@ class Subtitle(models.Model):
 
 
 class Decision(models.Model):
+
+    class Meta(object):
+        permissions = (
+            ('view_pdf', 'Can view PDF'),
+        )
+
     date = models.DateField()
     headers = models.ManyToManyField(Subtitle)
     pdf = models.FileField(upload_to='secure')

@@ -1,9 +1,10 @@
 import os
 
 from django.conf import settings
-from django.conf.urls import include, url
+from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import Http404
 from django.views.static import serve
 
 import main.views
@@ -14,6 +15,8 @@ import newsletters.views
 
 @login_required
 def protected_serve(request, path, document_root=None, show_indexes=False):
+    if not request.user.has_perm('view_pdf'):
+        return Http404()
     return serve(request, path, document_root, show_indexes)
 
 
