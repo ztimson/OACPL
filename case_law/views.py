@@ -4,31 +4,32 @@ from .models import Decision, Subtitle
 
 
 def browser(request):
+    headers = {}
+    path = request.GET.get('path')
     filter = request.GET.get('filter')
     decisions = Decision.objects.all()
     if filter:
-        headers = {}
         filter = filter.split('/')
-        ids = Subtitle.objects.filter(name__in=filter)
+        print(filter)
+        ids = Subtitle.objects.filter(name__in=filter).values_list('id')
         for id in ids:
             decisions = decisions.filter(headers__in=id)
-    else:
-        path = request.GET.get('path')
-        if path:
-            path = path.split('/')
-            ids = Subtitle.objects.filter(name__in=path).values_list('id')
-            for id in ids:
-                decisions = decisions.filter(headers__in=id)
+    elif path:
+        path = path.split('/')
+        ids = Subtitle.objects.filter(name__in=path).values_list('id')
+        for id in ids:
+            decisions = decisions.filter(headers__in=id)
 
-        headers = set()
-        for decision in decisions:
-            headers = headers.union(decision.headers.all().values_list('name', flat=True))
-        if path: headers = headers.difference(path)
+    headers = set()
+    for decision in decisions:
+        headers = headers.union(decision.headers.all().values_list('name', flat=True))
+    if path: headers = headers.difference(path)
 
     return render(request, 'browser.html', {
         'allHeaders': Subtitle.objects.all().order_by('name'),
         'decisions': decisions.order_by('synopsis'),
         'decisionsCount': len(decisions),
+        'filter': filter,
         'headers': sorted(headers),
         'headersCount': len(headers),
         'url': request.GET.get('path'),

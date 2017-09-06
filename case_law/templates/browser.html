@@ -15,13 +15,13 @@
         <div class="container">
             <div class="row py-3">
                 {% for header in allHeaders %}
-                    <div class="col-4">
-                        <input id="input-{{ header.id }}" class="curs-pointer" type="checkbox">
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <input id="input-{{ header.id }}" class="curs-pointer filters" name="filter" type="checkbox" value="{{ header }}">
                         <label for="input-{{ header.id }}" class="curs-pointer">{{ header }}</label>
                     </div>
                 {% endfor %}
                 <div class="col-12">
-                    <button class="btn btn-secondary d-block mx-auto"><i class="fa fa-search"></i> Search</button>
+                    <button id="search" class="btn btn-secondary d-block mx-auto"><i class="fa fa-search"></i> Search</button>
                 </div>
             </div>
         </div>
@@ -42,16 +42,24 @@
                     {% endfor %}
                 </ol>
             {% endif %}
+            {% if filter %}
+                <div class="col-12 p-3" style="background-color: #e9ecef;">
+                    Filters:
+                    {% for item in filter %}
+                        <span class="badge badge-primary">{{ item }}</span>
+                    {% endfor %}
+                    <span class="badge badge-danger"><a class="text-white" href="{% url 'browser' %}">&times; Clear Filters</a></span>
+                </div>
+            {% endif %}
             <div class="row p-3">
                 <div class="col-lg-12 ml-auto text-dark-primary">
-                    {% if headersCount > 1 %}
+                    {% if headersCount > 1 and decisionsCount > 1 and not filter %}
                         <h4>Headings</h4>
                         <hr>
                         {% for header in headers %}
                             <div>
                                 <a href="{% url 'browser' %}?path={% if url %}{{ url }}/{% endif %}{{ header }}">
-                                    <i class="fa fa-folder-open-o fa-2x"></i>
-                                    <h4 class="d-inline-block"> {{ header }}</h4>
+                                    <h4 class="d-inline-block"><i class="fa fa-folder-open-o"></i> {{ header }}</h4>
                                 </a>
                             </div>
                         {% endfor %}
@@ -62,8 +70,7 @@
                     {% for decision in decisions %}
                         <div>
                             <a href="{% url 'case' decision.id %}">
-                                <i class="fa fa-file-text-o fa-2x"></i>
-                                <h4 class="d-inline-block"> {{ decision.synopsis }}</h4>
+                                <h4 class="d-inline-block"><i class="fa fa-file-text-o"></i> {{ decision.synopsis }}</h4>
                             </a>
                         </div>
                     {% endfor %}
@@ -76,4 +83,16 @@
             {% if headersCount %}{{ headersCount }} Headers, {% endif %}{{ decisionsCount }} Decision{% if decisionsCount > 1 %}s{% endif %}
         </div>
     </div>
+
+    <script>
+        $('#search').click(function() {
+            var selected = $('input.filters').filter(function(i, e) {
+                return $(e).is(':checked')
+            }).map(function(i, e) {
+                return $(e).val()
+            });
+
+            window.location.href = '{% url 'browser' %}?filter=' + selected.toArray().join('/');
+        })
+    </script>
 {% endblock %}
