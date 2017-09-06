@@ -1,12 +1,12 @@
 from django.contrib import admin
 
-from case_law.models import Decision, Subtitle
+from case_law.models import Case, Heading
 
-admin.site.register(Subtitle)
+admin.site.register(Heading)
 
 
-@admin.register(Decision)
+@admin.register(Case)
 class DecisionAdmin(admin.ModelAdmin):
-    fields = ['synopsis', 'headers', 'date', 'pdf']
-    filter_horizontal = ['headers']
-    list_display = ['synopsis', 'date']
+    fields = ['synopsis', 'headings', 'published', 'pdf']
+    filter_horizontal = ['headings']
+    list_display = ['synopsis', 'published']

@@ -1,6 +1,6 @@
 from django.db import models
 
-from case_law.models import Decision
+from case_law.models import Case
 
 
 class AreaOfExpertise(models.Model):
@@ -15,7 +15,7 @@ class AreaOfExpertise(models.Model):
 
 
 class Expert(models.Model):
-    cases = models.ManyToManyField(Decision, null=True, blank=True)
+    cases = models.ManyToManyField(Case, null=True, blank=True)
     expertise = models.ManyToManyField(AreaOfExpertise)
     institute = models.CharField(max_length=255, null=True, blank=True)
     name = models.CharField(max_length=255)

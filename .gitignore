@@ -1,6 +1,5 @@
-
 /OACPL.iml
 /.idea/
-/*/migrations/
+/*/migrations
 /OACPL/settings.py
 /db.sqlite3

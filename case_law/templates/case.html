@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    <div class="container-fluid bg-light-blue py-3">
+        <div class="container">
+            <h3 class="text-dark-primary">Synopsis</h3>
+            {% for heading in headings %}
+                <span class="badge badge-primary">{{ heading }}</span>
+            {% endfor %}
+            <p>{{ case.synopsis | linebreaks }}</p>
+            <h6 class="text-muted">Published: {{ case.published }}</h6>
+            {% if perms.case_law.view_pdf %}
+                <a href="/media/{{ case.pdf }}">View PDF</a>
+                <br>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
