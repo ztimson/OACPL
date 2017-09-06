@@ -26,6 +26,7 @@
 {% csrf_token %}
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white py-4">
+    <div class="container">
         <a class="navbar-brand text-dark-primary" href="{% url 'home' %}">
             <img src="{% static 'main/img/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
             <div class="d-none d-sm-inline-block">
@@ -68,10 +69,11 @@
                 {% endif %}
             </ul>
         </div>
-    <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
 </nav>
 
 {% block body %}
