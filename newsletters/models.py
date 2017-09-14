@@ -1,13 +1,13 @@
 from django.db import models
 from django.contrib.auth.admin import User
-from django.utils.timezone import now
+from django.utils import timezone
 
 
 class Newsletter(models.Model):
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     creator = models.ForeignKey(User)
-    publish = models.DateTimeField(default=now())
+    publish = models.DateTimeField(default=timezone.now)
     sent = models.BooleanField(default=False)
     subject = models.CharField(max_length=255)
 
