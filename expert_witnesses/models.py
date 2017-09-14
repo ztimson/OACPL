@@ -6,7 +6,7 @@ from case_law.models import Case
 class AreaOfExpertise(models.Model):
     class Meta:
         verbose_name = 'Area of Expertise'
-        verbose_name_plural = 'Area of Expertise'
+        verbose_name_plural = 'Areas of Expertise'
 
     field = models.CharField(max_length=255)
 
