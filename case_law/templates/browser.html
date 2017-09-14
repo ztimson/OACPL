@@ -2,93 +2,106 @@
 {% load static %}
 
 {% block body %}
-    <div class="container-fluid bg-dark-primary p-3">
-        <div class="container">
-            <a class="text-white text-center d-block mx-auto curs-pointer" data-toggle="collapse" data-target="#search-filters" aria-expanded="false" aria-controls="search-filters">
-                Search
-                <br>
-                <img class="mx-auto" src="{% static 'main/img/arrow.png' %}">
-            </a>
-        </div>
-    </div>
-    <div id="search-filters" class="container-fluid bg-dark-primary text-white collapse">
-        <div class="container">
-            <div class="row py-3">
-                {% for heading in allHeadings %}
-                    <div class="col-xs-12 col-sm-6 col-md-4">
-                        <input id="input-{{ heading.id }}" class="curs-pointer filters" name="filter" type="checkbox" value="{{ heading }}">
-                        <label for="input-{{ heading.id }}" class="curs-pointer">{{ heading }}</label>
-                    </div>
-                {% endfor %}
-                <div class="col-12">
-                    <button id="search" class="btn btn-secondary d-block mx-auto"><i class="fa fa-search"></i> Search</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid bg-light-blue">
-        <div class="container bg-white p-0">
-            {% if url %}
-                <ol class="breadcrumb">
+    <style>
+        .gradient {
+            top: 0;
+            transition: all 0.15s ease-in;
+            opacity: 1;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.7) 60%, rgba(255, 255, 255, 1) 100%);
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            display: table-cell;
+            vertical-align: bottom;
+        }
+
+        .tc {
+            display: table-cell;
+        }
+
+        a.cases:hover {
+            text-decoration: none;
+        }
+
+        a.cases:hover .gradient {
+            opacity: 0;
+        }
+    </style>
+    <div class="container-fluid bg-dark-primary">
+        <div class="row">
+                <ol class="col-12 mb-0 breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="{% url 'browser' %}"><i class="fa fa-home"></i></a>
+                        <a href="{% url 'home' %}"><i class="fa fa-home"></i></a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'browser' %}">Case Law</a>
                     </li>
                     {% for item in urls %}
                         <li class="breadcrumb-item{% if forloop.last %} active{% endif %}">
-                            <a {% if not forloop.last %}href="{% url 'browser' %}?path={% for item2 in urls %}{% if forloop.counter0 <= forloop.parentloop.counter0%}{{ item }}{% endif %}{% endfor %}"{% endif %}>
+                            <a {% if not forloop.last %}href="{% url 'browser' %}?path=
+
+                                    {% for item2 in urls %}{% if forloop.counter0 <= forloop.parentloop.counter0 %}{{ item }}{% endif %}{% endfor %}"{% endif %}>
                                 {{ item }}
                             </a>
                         </li>
                     {% endfor %}
                 </ol>
-            {% endif %}
-            {% if filter %}
-                <div class="col-12 p-3" style="background-color: #e9ecef;">
-                    Filters:
-                    {% for item in filter %}
-                        <span class="badge badge-primary">{{ item }}</span>
-                    {% endfor %}
-                    <span class="badge badge-danger"><a class="text-white" href="{% url 'browser' %}">&times; Clear Filters</a></span>
-                </div>
-            {% endif %}
-            <div class="row p-3">
-                <div class="col-lg-12 ml-auto text-dark-primary">
-                    {% if headingCount > 1 and headingCount > 1 and not filter %}
-                        <h4>Headings</h4>
-                        <hr>
+                <div class="col-md-3 text-white pt-5">
+                    <h4>Headings
+                        {% if headingCount > 1 and caseCount > 1 and not filter %}
+                            <span class="text-muted">({{ headingCount }})</span>
+                        {% endif %}
+                    </h4>
+                    <hr style="border-color:#ffffff !important">
+                    {% if headingCount > 1 and caseCount > 1 and not filter %}
                         {% for heading in headings %}
                             <div>
                                 <a href="{% url 'browser' %}?path={% if url %}{{ url }}/{% endif %}{{ heading }}">
-                                    <h4 class="d-inline-block"><i class="fa fa-folder-open-o"></i> {{ heading }}</h4>
+                                    <h4 class="d-inline-block" style="color:#D8D8D8"><i
+                                            class="fa fa-folder-open-o"></i> {{ heading }}
+                                    </h4>
                                 </a>
                             </div>
                         {% endfor %}
                         <br>
                     {% endif %}
-                    <h4>Cases</h4>
-                    <hr>
+                </div>
+            <div class="{% if not filter %}col-md-9{% else %}col-12{% endif %} bg-light-blue pt-5">
+                <h4>Cases <span class="text-muted">({{ caseCount }})</span></h4>
+                <hr>
+                <div class="row">
                     {% for case in cases %}
-                        <div>
-                            <a href="{% url 'case' case.id %}">
-                                <h4 class="d-inline-block"><i class="fa fa-file-text-o"></i> {{ case.synopsis }}</h4>
-                            </a>
-                        </div>
+                        <a class="col-md-4 col-lg-3 mb-3 cases" target="_blank"
+                           {% if perms.case_law.view_pdf %}href="/media/{{ case.pdf }}"{% endif %}>
+                            <div class="card" style="overflow:hidden;">
+                                <div class="tc">
+                                    <div class="card-header">
+                                        <span class="text-muted">{{ case.published }}</span>
+                                    </div>
+                                    <div class="card-body" style="position:relative; height:150px; overflow:hidden;">
+                                        <span class="card-text text-secondary">{{ case.synopsis | linebreaks }}</span>
+                                        <div class="gradient">
+                                        </div>
+                                    </div>
+                                    <div class="card-footer p-1">
+                                        {% for heading in case.headings.all|dictsort:'name' %}
+                                            <span class="badge badge-primary">{{ heading.name }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
                     {% endfor %}
                 </div>
             </div>
         </div>
     </div>
-    <div class="container-fluid bg-dark-primary p-2">
-        <div class="container text-white">
-            {% if headingCount %}{{ headingCount }} Headings, {% endif %}{{ caseCount }} Case{% if caseCount > 1 %}s{% endif %}
-        </div>
-    </div>
 
     <script>
-        $('#search').click(function() {
-            var selected = $('input.filters').filter(function(i, e) {
+        $('#search').click(function () {
+            var selected = $('input.filters').filter(function (i, e) {
                 return $(e).is(':checked')
-            }).map(function(i, e) {
+            }).map(function (i, e) {
                 return $(e).val()
             });
 

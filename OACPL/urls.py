@@ -25,7 +25,6 @@ urlpatterns = [
     url(r'^admin/logout', main.views.logout, name='logout'),
     url(r'^admin/', admin.site.urls, name='admin'),
     url(r'^attorney/(?P<id>\d+)', charter_members.views.index, name='attorney'),
-    url(r'^caselaw/(?P<id>\d+)', case_law.views.case, name='case'),
     url(r'^caselaw/', case_law.views.browser, name='browser'),
     url(r'^media/secure/(?P<path>.*)$', protected_serve, {'document_root': os.path.join(settings.MEDIA_ROOT, 'secure')}, name='secure media'),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}, name='media'),

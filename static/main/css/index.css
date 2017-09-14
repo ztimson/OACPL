@@ -62,6 +62,10 @@ ul {
     color: #0F4C85 !important;
 }
 
+.text-light-blue {
+    color: #eaf4f6;
+}
+
 .bg-dark-primary {
     background-color: #00305b;
 }
