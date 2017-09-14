@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
@@ -15,9 +16,13 @@ class Case(models.Model):
             ('view_pdf', 'Can view PDF'),
         )
 
+    def validate_file_extension(value):
+        if not value.name.endswith('.pdf'):
+            raise ValidationError(u'File is not a PDF')
+
     published = models.DateField()
     headings = models.ManyToManyField(Heading)
-    pdf = models.FileField(upload_to='secure')
+    pdf = models.FileField('PDF', upload_to='secure', validators=[validate_file_extension])
     synopsis = models.TextField()
 
     def __str__(self):
