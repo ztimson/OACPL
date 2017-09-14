@@ -34,11 +34,11 @@
                         <a href="{% url 'home' %}"><i class="fa fa-home"></i></a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{% url 'browser' %}">Case Law</a>
+                        <a href="{% url 'caselaw' %}">Case Law</a>
                     </li>
                     {% for item in urls %}
                         <li class="breadcrumb-item{% if forloop.last %} active{% endif %}">
-                            <a {% if not forloop.last %}href="{% url 'browser' %}?path=
+                            <a {% if not forloop.last %}href="{% url 'caselaw' %}?path=
 
                                     {% for item2 in urls %}{% if forloop.counter0 <= forloop.parentloop.counter0 %}{{ item }}{% endif %}{% endfor %}"{% endif %}>
                                 {{ item }}
@@ -56,7 +56,7 @@
                     {% if headingCount > 1 and caseCount > 1 and not filter %}
                         {% for heading in headings %}
                             <div>
-                                <a href="{% url 'browser' %}?path={% if url %}{{ url }}/{% endif %}{{ heading }}">
+                                <a href="{% url 'caselaw' %}?path={% if url %}{{ url }}/{% endif %}{{ heading }}">
                                     <h4 class="d-inline-block" style="color:#D8D8D8"><i
                                             class="fa fa-folder-open-o"></i> {{ heading }}
                                     </h4>
@@ -105,7 +105,7 @@
                 return $(e).val()
             });
 
-            window.location.href = '{% url 'browser' %}?filter=' + selected.toArray().join('/');
+            window.location.href = '{% url 'caselaw' %}?filter=' + selected.toArray().join('/');
         })
     </script>
 {% endblock %}

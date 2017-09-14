@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 bg-dark-primary">
+                    {% for filter in filters %}
+                        <div class="badge badge-primary">{{ filter.field }}</div>
+                    {% endfor %}
+                </div>
+                <div class="col-md-9 bg-light-blue">
+                    {% for expert in experts %}
+                        {{ expert.name }} - <i class="fa fa-institution"></i> {{ expert.institute }}
+                        {% for e in expert.expertise.all|dictsort:'field' %}
+                            <i class="fa fa-graduation-cap"></i> {{ e.field }}
+                            {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
