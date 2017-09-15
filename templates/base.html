@@ -12,7 +12,7 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway"/>
-    <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}">
+    <script src="https://use.fontawesome.com/d71773005c.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
@@ -74,7 +74,7 @@
                 {% endif %}
                 {% if not request.user.is_authenticated %}
                     <li class="nav-item text-dark-primary">
-                        <a class="nav-link" href="/admin/">LOGIN</a>
+                        <a class="nav-link" href="{% url 'login' %}">LOGIN</a>
                     </li>
                 {% endif %}
             </ul>
