@@ -27,6 +27,12 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
+# https://accounts.google.com/DisplayUnlockCaptcha
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'zaktimson@gmail.com'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 587
 
 # Application definition
 

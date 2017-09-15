@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth.models import User
+from django.core import mail
 
 from charter_members.models import Attorney
 from newsletters.models import Subscriber
+from OACPL import settings
 
 
 def index(request):
@@ -25,7 +27,8 @@ def login(request):
                                             email=request.POST.get('email'),
                                             password=request.POST.get('password'))
             user.save()
-            # TODO: Send confirmation email
+            if settings.EMAIL_HOST:
+                mail.send_mail('OACPL Registration', 'You have successfully registered to the Ontario Asscocaition of Child Protection Lawyers!', settings.EMAIL_HOST_USER, [request.POST.get('email')])
             if request.POST.get('newsletter'):
                 Subscriber.objects.create(email=request.POST.get('email'))
             # TODO: If Case law access was requested, send an email out to staff
