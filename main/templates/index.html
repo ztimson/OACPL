@@ -4,6 +4,10 @@
 {% block head %}
     <script>
         $(function() {
+            $('#top').click(function() {
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+            });
+
             $('#contact-submit').click(function() {
                 var name = $('#contact-name');
                 var email = $('#contact-email');
@@ -195,7 +199,7 @@
 
     <!-- Back to top -->
     <div class="container-fluid bg-dark-primary text-center py-4">
-        <a class="text-white" href="#">
+        <a id="top" class="text-white curs-pointer">
             <img class="mx-auto" src="{% static 'main/img/arrow.png' %}" style="transform: rotate(180deg)">
             <br>
             BACK TO TOP
