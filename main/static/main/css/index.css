@@ -33,17 +33,19 @@ ul {
 
 .baby {
     height: 500px;
-    background: url('https://static.wixstatic.com/media/14df13e4a2e04e39a34a477052234743.jpg/v1/fill/w_1904,h_801,al_c,q_85,usm_0.66_1.00_0.01/14df13e4a2e04e39a34a477052234743.webp') no-repeat fixed;
+    background: url('https://static.wixstatic.com/media/14df13e4a2e04e39a34a477052234743.jpg/v1/fill/w_1904,h_801,al_c,q_85,usm_0.66_1.00_0.01/14df13e4a2e04e39a34a477052234743.webp') no-repeat center center fixed;
+    background-size: cover;
 }
 
 .hands {
     height: 500px;
     background: url('https://static.wixstatic.com/media/50c52cbd3372400da5552a320daa7569.jpg/v1/fill/w_1904,h_950,al_c,q_85,usm_0.66_1.00_0.01/50c52cbd3372400da5552a320daa7569.webp') no-repeat center center fixed;
+    background-size: cover;
 }
 
 .architecture {
     background: url('https://static.wixstatic.com/media/5bfb6f_c9a631e8e43443cb9d7ad97133d9d83d.jpg/v1/fill/w_980,h_913,al_c,q_85,usm_0.66_1.00_0.01/5bfb6f_c9a631e8e43443cb9d7ad97133d9d83d.webp') no-repeat fixed;
-    background-size: 100%;
+    background-size: cover;
 }
 
 /* Utilities */
