@@ -62,8 +62,14 @@
                 <input type="text" class="form-control mb-2 p-2" name="email" placeholder="Email"/>
                 <input type="password" class="form-control mb-2 p-2" name="password" placeholder="Password"/>
                 <input type="password" class="form-control mb-2 p-2" placeholder="Confirm Password"/>
-                <input type="checkbox" class="mb-2" name="newsletter"> Newsletter
-                <input type="checkbox" class="mb-2" name="caselaw"> Case Law Access
+                <div class="col-12 px-0">
+                    <input id="newsletter" type="checkbox" class="mb-2 curs-pointer" name="newsletter">
+                    <label for="newsletter" class="curs-pointer">Newsletter</label>
+                </div>
+                <div class="col-12 px-0">
+                    <input id="caselaw" type="checkbox" class="mb-2 curs-pointer" name="caselaw">
+                    <label for="caselaw" class="curs-pointer">Case Law Access</label>
+                </div>
                 <button class="btn btn-primary col-12 mb-2 p-2">Register</button>
                 <p class="text-muted"><a id="login-mode">Login</a></p>
             </form>
