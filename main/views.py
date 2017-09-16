@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.core import mail
+from django.shortcuts import render, redirect
 
 from charter_members.models import Attorney
 from newsletters.models import Subscriber
@@ -11,6 +12,20 @@ from OACPL import settings
 def index(request):
     attorneys = Attorney.objects.filter(front_page=True)
     return render(request, 'index.html', {'attorneys': attorneys})
+
+
+def contact(request):
+    name = request.POST.get('name')
+    email = request.POST.get('email')
+    subject = request.POST.get('subject')
+    body = request.POST.get('body')
+
+    result = False
+    if name is not None and email is not None and subject is not None and body is not None:
+        result = mail.send_mail(f'OACPL CONTACT: {subject}', body, settings.EMAIL_HOST_USER, [settings.EMAIL_CONTACT],
+                                html_message=f'<strong>From:</strong> {name} ({email})<br><br>{body}')
+
+    return JsonResponse({'success': True if result else False})
 
 
 def login(request):

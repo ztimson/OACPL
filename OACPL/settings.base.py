@@ -33,6 +33,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'zaktimson@gmail.com'
 EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
+EMAIL_CONTACT = 'zaktimson@gmail.com'
 
 # Application definition
 

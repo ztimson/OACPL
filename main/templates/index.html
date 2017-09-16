@@ -1,6 +1,48 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block head %}
+    <script>
+        $(function() {
+            $('#contact-submit').click(function() {
+                var name = $('#contact-name');
+                var email = $('#contact-email');
+                var subject = $('#contact-subject');
+                var body = $('#contact-body');
+
+                function validateEmail($email) {
+                    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+                    return emailReg.test( $email );
+                }
+
+                if(!name.val()) name.effect('shake');
+                if(!email.val() || !validateEmail(email.val())) email.effect('shake');
+                if(!subject.val()) subject.effect('shake');
+                if(!body.val()) body.effect('shake');
+
+                if(name.val() && email.val() && validateEmail(email.val()) && subject.val() && body.val()) {
+                    $.post({% url 'contact' %}, {
+                        csrfmiddlewaretoken:$("[name='csrfmiddlewaretoken']").val(),
+                        name: name.val(),
+                        email: email.val(),
+                        subject: subject.val(),
+                        body: body.val()
+                    }).done(function(resp) {
+                        if(resp['success']) {
+                            name.val('');
+                            email.val('');
+                            subject.val('');
+                            body.val('');
+                            $('#contact-success').collapse('show');
+                            setTimeout(function() {$('#contact-success').collapse('hide');}, 5000);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
 {% block body %}
     <!-- Home -->
     <div class="container-fluid baby">
@@ -125,13 +167,19 @@
                     <br>
                     <br>
                     <div class="row">
-                        <div class="col-lg-6">
-                            <input class="form-control" placeholder="Name">
-                            <input class="form-control" placeholder="Email">
-                            <input class="form-control" placeholder="Subject">
+                        <div id="contact-success" class="col-12 collapse" aria-expanded="false">
+                            <div class=" alert alert-success">Successfully sent email!</div>
                         </div>
                         <div class="col-lg-6">
-                            <textarea class="form-control h-100" placeholder="Message" rows="4"></textarea>
+                            <input id="contact-name" class="form-control" placeholder="Name">
+                            <input id="contact-email" class="form-control" placeholder="Email">
+                            <input id="contact-subject" class="form-control" placeholder="Subject">
+                        </div>
+                        <div class="col-lg-6">
+                            <textarea id="contact-body" class="form-control h-100" placeholder="Message" rows="4"></textarea>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <button id="contact-submit" class="btn btn-primary float-right">Send</button>
                         </div>
                     </div>
                 </div>
