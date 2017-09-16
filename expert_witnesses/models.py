@@ -15,7 +15,7 @@ class AreaOfExpertise(models.Model):
 
 
 class Expert(models.Model):
-    cases = models.ManyToManyField(Case)
+    cases = models.ManyToManyField(Case, blank=True)
     expertise = models.ManyToManyField(AreaOfExpertise)
     institute = models.CharField(max_length=255, null=True, blank=True)
     name = models.CharField(max_length=255)
