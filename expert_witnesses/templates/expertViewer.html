@@ -40,6 +40,11 @@
                                     <td class="p-2" width="150px">{{ case.published }}</td>
                                 </tr>
                             {% endfor %}
+                            {% if not expert.cases.all %}
+                                <tr>
+                                    <td class="text-muted">No Cases</td>
+                                </tr>
+                            {% endif %}
                             </tbody>
                         </table>
                     </div>
