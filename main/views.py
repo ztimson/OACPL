@@ -1,7 +1,8 @@
 from django.http import JsonResponse
 from django.contrib import auth
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.core import mail
+from django.db.models import Q
 from django.shortcuts import render, redirect
 
 from charter_members.models import Attorney
@@ -46,13 +47,13 @@ def login(request):
                 mail.send_mail('OACPL Registration', 'You have successfully registered to the Ontario Asscocaition of Child Protection Lawyers!', settings.EMAIL_HOST_USER, [request.POST.get('email')])
             if request.POST.get('newsletter'):
                 Subscriber.objects.create(email=request.POST.get('email'))
-            # TODO: If Case law access was requested, send an email out to staff
+            if request.POST.get('caselaw'):
+                perm = Permission.objects.get(codename='change_user')
+                admins = User.objects.filter(Q(groups__permissions=perm) | Q(user_permissions=perm) | Q(is_superuser=True)).distinct().values_list('email', flat=True)
+                print(admins)
+                mail.send_mail('OACPL Case Law Request', f'{user.email} has requested case law access.', settings.EMAIL_HOST_USER, admins, html_message=f'<a href="#">{user.email}</a> has requested case law access.')
             auth.login(request, user)
             return redirect('/')
-
-        elif request.POST.get('request') == 'reset':
-            # TODO: Reset password and send email
-            pass
     else:
         return render(request, 'login.html', {'navbar': False, 'footer': False})
 
