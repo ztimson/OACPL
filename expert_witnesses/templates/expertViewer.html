@@ -1,5 +1,58 @@
 {% extends 'base.html' %}
 
+{% block head %}
+    <script>
+    $(function() {
+        $('tr').click(function(e) {
+            var url = $(e.target).parent().attr('href');
+            if(url) window.open(url, '_blank');
+        });
+    });
+    </script>
+{% endblock %}
+
 {% block body %}
-    test
+    <div class="container-fluid bg-light-blue">
+        <div class="container">
+            <div class="row">
+                <div class="col-9 py-3">
+                    <div>
+                        <h3>{{ expert.name }}</h3>
+                        {% if expert.institute %}
+                            <i class="fa fa-institution"></i> {{ expert.institute }}
+                        {% else %}
+                            <span class="text-muted"><i class="fa fa-institution"></i> No Institute</span>
+                        {% endif %}
+                    </div>
+                    <div class="mt-5">
+                        <h5 class="ml-1">Cases</h5>
+                        <table class="table {% if perms.case_law.view_pdf %}table-hover{% endif %} bg-white">
+                            <thead>
+                            <tr>
+                                <th class="p-2">Synopsis</th>
+                                <th class="p-2">Date</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for case in expert.cases.all %}
+                                <tr {% if perms.case_law.view_pdf %}class="curs-pointer" href="/media/{{ case.pdf }}"{% endif %}>
+                                    <td class="p-2">{{ case.synopsis }}</td>
+                                    <td class="p-2" width="150px">{{ case.published }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-3 bg-dark-primary text-white py-3">
+                    <h5>Areas of Expertise</h5>
+                    <ul class="pl-0" style="list-style: none">
+                        {% for e in expert.expertise.all %}
+                            <li><i class="fa fa-graduation-cap" aria-hidden="true"></i> {{ e.field }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
