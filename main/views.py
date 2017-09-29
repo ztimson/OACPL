@@ -39,12 +39,10 @@ def login(request):
             else:
                 return render(request, 'login.html', {'navbar': False, 'footer': False, 'failed': True})
         elif request.POST.get('request') == 'register':
-            user = User.objects.create_user(request.POST.get('username'),
-                                            email=request.POST.get('email'),
-                                            password=request.POST.get('password'))
+            user = User.objects.create_user(request.POST.get('username'), email=request.POST.get('email'), password=request.POST.get('password'))
             user.save()
             if settings.EMAIL_HOST:
-                mail.send_mail('OACPL Registration', 'You have successfully registered to the Ontario Asscocaition of Child Protection Lawyers!', settings.EMAIL_HOST_USER, [request.POST.get('email')])
+                mail.send_mail('OACPL Registration', 'You have successfully registered to the Ontario Association of Child Protection Lawyers!', settings.EMAIL_HOST_USER, [request.POST.get('email')])
             if request.POST.get('newsletter'):
                 Subscriber.objects.create(email=request.POST.get('email'))
             if request.POST.get('caselaw'):
