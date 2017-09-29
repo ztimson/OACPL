@@ -1,0 +1,39 @@
+{% load static %}
+
+<div style="width: calc(100% - 2px); border: solid 1px rgba(0,0,0,0.2)">
+    <div style="width: calc(100% - 1rem); background-color: #ffffff; padding: 0.5rem">
+        <img src="{% static 'main/img/logo.png' %}" width="30" height="30" style="display: inline-block; vertical-align: top" alt="">
+        <div style="display: inline-block; font-size: 1.25rem; color: #0F4C85">
+            ONTARIO ASSOCIATION OF
+            <br>
+            CHILD PROTECTION LAWYERS
+        </div>
+    </div>
+    <div style="background-color: #00305b; color: #ffffff; padding: 0.5rem; font-size: 1rem">
+        {% if name %}
+            Hello {{ name }},
+            <br>
+            <br>
+        {% endif %}
+        {% autoescape off %}
+            {{ content }}
+        {% endautoescape %}
+        {% if signature %}
+            {{ signature }}
+        {% else %}
+            <br>
+            <br>
+            --
+            <br>
+            <br>
+            Sincerely,
+            <br>
+            The OACPL Team
+        {% endif %}
+    </div>
+    <footer style="background-color: #ffffff; color: #0F4C85;">
+        <div style="text-align: center">
+            <p class="mb-0">© 2017 Ontario Association of Child Protection Lawyers.</p>
+        </div>
+    </footer>
+</div>
