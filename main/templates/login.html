@@ -23,12 +23,25 @@
             $('#register-mode').click(function() {
                 $('#login-form').collapse('hide');
                 $('#register-form').collapse('show');
+                $('#reset-form').collapse('hide');
             });
 
             $('#login-mode').click(function() {
                 $('#login-form').collapse('show');
                 $('#register-form').collapse('hide');
+                $('#reset-form').collapse('hide');
             });
+
+            $('#forgot-password').click(function() {
+                $('#login-form').collapse('hide');
+                $('#register-form').collapse('hide');
+                $('#reset-form').collapse('show');
+            });
+
+            {% if failed %}
+                $('#login-form input[name="username"]').css('border-color', '#ff0000').effect('shake');
+                $('#login-form input[name="password"]').css('border-color', '#ff0000').effect('shake');
+            {% endif %}
         });
     </script>
 {% endblock %}
@@ -52,7 +65,10 @@
                 <input type="text" class="form-control mb-2 p-2" name="username" placeholder="Username"/>
                 <input type="password" class="form-control mb-2 p-2" name="password" placeholder="Password"/>
                 <button class="btn btn-primary col-12 mb-2 p-2">login</button>
-                <p class="text-muted"><a id="register-mode">Register</a></p>
+                <p class="d-inline-block text-muted curs-pointer"><a id="register-mode">Register</a></p>
+                {% if failed %}
+                    <p class="d-inline-block text-muted curs-pointer float-right"><a id="forgot-password">Forgot Password</a></p>
+                {% endif %}
             </form>
 
             <form id="register-form" class="collapse" method="post">
@@ -71,7 +87,13 @@
                     <label for="caselaw" class="curs-pointer">Case Law Access</label>
                 </div>
                 <button class="btn btn-primary col-12 mb-2 p-2">Register</button>
-                <p class="text-muted"><a id="login-mode">Login</a></p>
+                <p class="text-muted curs-pointer"><a id="login-mode">Login</a></p>
+            </form>
+
+            <form id="reset-form" class="collapse" method="post">
+                {% csrf_token %}
+                <input type="text" class="form-control mb-2 p-2" name="email" placeholder="Email"/>
+                <button class="btn btn-primary col-12 mb-2 p-2">Reset</button>
             </form>
         </div>
     </div>
