@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils import timezone
 
+from OACPL import settings
 from .models import Newsletter, Subscriber
 
 
@@ -27,6 +28,7 @@ class NewsletterAdmin(admin.ModelAdmin):
     def save_model(self, request, instance, form, change):
         user = request.user
         instance = form.save(commit=False)
+        instance.body = instance.body.replace('src="', 'src="' + settings.BASE_URL)
         instance.creator = user
         instance.save()
         return instance

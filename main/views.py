@@ -25,7 +25,7 @@ def contact(request):
     result = False
     if name is not None and email is not None and subject is not None and body is not None:
         result = mail.send_mail('OACPL CONTACT: %(subject)s' % locals(), body, settings.EMAIL_HOST_USER, [settings.EMAIL_CONTACT],
-                                html_message=render_to_string('email.html', {'content': '<strong>Someone has messaged you via the website contact form!<br><br>Subject:</strong> %(subject)s<br><strong>From:</strong> %(name)s (%(email)s)<br><br>%(body)s' % locals(), 'signature': ' '}))
+                                html_message=render_to_string('email.html', {'content': '<strong>Someone has messaged you via the website contact form!<br><br>Subject:</strong> %(subject)s<br><strong>From:</strong> %(name)s (%(email)s)<br><br>%(body)s' % locals(), 'signature': ' ', 'base_url': settings.BASE_URL}))
 
     return JsonResponse({'success': True if result else False})
 
@@ -43,14 +43,14 @@ def login(request):
             user = User.objects.create_user(request.POST.get('username'), email=request.POST.get('email'), password=request.POST.get('password'))
             user.save()
             if settings.EMAIL_HOST:
-                mail.send_mail('OACPL Registration', 'You have successfully registered to the Ontario Association of Child Protection Lawyers!', settings.EMAIL_HOST_USER, [request.POST.get('email')], html_message=render_to_string('email.html', {'content': 'You have successfully registered to the Ontario Association of Child Protection Lawyers!', 'name': user.username}))
+                mail.send_mail('OACPL Registration', 'You have successfully registered to the Ontario Association of Child Protection Lawyers!', settings.EMAIL_HOST_USER, [request.POST.get('email')], html_message=render_to_string('email.html', {'content': 'You have successfully registered to the Ontario Association of Child Protection Lawyers!', 'name': user.username, 'base_url': settings.BASE_URL}))
             if request.POST.get('newsletter'):
                 Subscriber.objects.create(email=request.POST.get('email'))
             if request.POST.get('caselaw'):
                 perm = Permission.objects.get(codename='change_user')
                 admins = User.objects.filter(Q(groups__permissions=perm) | Q(user_permissions=perm) | Q(is_superuser=True)).distinct().values_list('email', flat=True)
                 email = user.email
-                mail.send_mail('OACPL Case Law Request', '%(email)s has requested case law access.', settings.EMAIL_HOST_USER, admins, html_message=render_to_string('email.html', {'content': '<a href="#">%(email)s</a> has requested case law access.'}))
+                mail.send_mail('OACPL Case Law Request', '%(email)s has requested case law access.', settings.EMAIL_HOST_USER, admins, html_message=render_to_string('email.html', {'content': '<a href="#">%(email)s</a> has requested case law access.', 'base_url': settings.BASE_URL}))
             auth.login(request, user)
             return redirect('/')
     else:
