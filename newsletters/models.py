@@ -2,9 +2,11 @@ from django.db import models
 from django.contrib.auth.admin import User
 from django.utils import timezone
 
+from ckeditor_uploader.fields import RichTextUploadingField
+
 
 class Newsletter(models.Model):
-    body = models.TextField()
+    body = RichTextUploadingField()
     created = models.DateTimeField(auto_now_add=True)
     creator = models.ForeignKey(User)
     publish = models.DateTimeField(default=timezone.now)

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_URL = 'http://oacpl.zakscode.com'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -41,6 +42,8 @@ INSTALLED_APPS = [
     'bootstrap_admin',
     'case_law',
     'charter_members.apps.CharterMembersConfig',
+    'ckeditor',
+    'ckeditor_uploader',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -1,7 +1,7 @@
 import os
 
 from django.conf import settings
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import Http404
@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls, name='admin'),
     url(r'^attorney/(?P<id>\d+)', charter_members.views.index, name='attorney'),
     url(r'^caselaw/', case_law.views.browser, name='caselaw'),
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^contact/', main.views.contact, name='contact'),
     url(r'^experts/(?P<id>\d+)', expert_witnesses.views.viewer, name='expert'),
     url(r'^experts/', expert_witnesses.views.browser, name='experts'),
