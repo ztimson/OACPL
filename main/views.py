@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 
+from OACPL.utils import url_fix_render_to_string
 from charter_members.models import Attorney
 from newsletters.models import Subscriber
 from OACPL import settings
@@ -25,7 +26,7 @@ def contact(request):
     result = False
     if name is not None and email is not None and subject is not None and body is not None:
         result = mail.send_mail('OACPL CONTACT: %(subject)s' % locals(), body, settings.EMAIL_HOST_USER, [settings.EMAIL_CONTACT],
-                                html_message=render_to_string('email.html', {'content': '<strong>Someone has messaged you via the website contact form!<br><br>Subject:</strong> %(subject)s<br><strong>From:</strong> %(name)s (%(email)s)<br><br>%(body)s' % locals(), 'signature': ' ', 'base_url': settings.BASE_URL}))
+                                html_message=url_fix_render_to_string('email.html', {'content': '<strong>Someone has messaged you via the website contact form!<br><br>Subject:</strong> %(subject)s<br><strong>From:</strong> %(name)s (%(email)s)<br><br>%(body)s' % locals(), 'signature': ' '}))
 
     return JsonResponse({'success': True if result else False})
 
