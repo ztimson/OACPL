@@ -9,7 +9,7 @@
                     <form>
                         <div class="mt-2">
                             <h5 for="filter" class="text-white mb-0 pl-1">Name</h5>
-                            <input class="form-control" name="name" value="{{ name }}">
+                            <input class="form-control" name="name" value="{% if name %}{{ name }}{% endif %}">
                         </div>
                         <div class="mt-2">
                             <h5 for="filter" class="text-white mb-0 pl-1">Institute</h5>
