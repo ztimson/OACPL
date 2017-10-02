@@ -3,28 +3,19 @@
 
 {% block body %}
     <style>
-        .gradient {
-            top: 0;
-            transition: all 0.15s ease-in;
-            opacity: 1;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.7) 60%, rgba(255, 255, 255, 1) 100%);
-            position: absolute;
-            height: 100%;
-            width: 100%;
-            display: table-cell;
-            vertical-align: bottom;
-        }
-
-        .tc {
-            display: table-cell;
-        }
-
-        a.cases:hover {
+        a.cases {
             text-decoration: none;
         }
 
-        a.cases:hover .gradient {
-            opacity: 0;
+        .cases .card-body p {
+            background: -webkit-linear-gradient(#555555, #ffffff);
+            -webkit-background-clip: text;
+            color: transparent;
+            transition: color 0.25s;
+        }
+
+        .cases .card-body p:hover {
+            color: #555555;
         }
     </style>
     <div class="container-fluid bg-dark-primary">
