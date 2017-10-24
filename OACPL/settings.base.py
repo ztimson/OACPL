@@ -31,8 +31,8 @@ ALLOWED_HOSTS = ['*']
 # https://accounts.google.com/DisplayUnlockCaptcha
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'zaktimson@gmail.com'
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = 'ontarioacpl@gmail.com'
+EMAIL_HOST_PASSWORD = 'b5q?E8bhE7br*~)Y'
 EMAIL_PORT = 587
 EMAIL_CONTACT = 'zaktimson@gmail.com'
 
