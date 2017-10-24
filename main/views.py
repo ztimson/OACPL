@@ -14,7 +14,7 @@ from OACPL import settings
 
 def index(request):
     attorneys = Attorney.objects.filter(front_page=True)
-    return render(request, 'index.html', {'attorneys': attorneys})
+    return render(request, 'index.html', {'attorneys': attorneys, 'contact': settings.EMAIL_CONTACT})
 
 
 def contact(request):
