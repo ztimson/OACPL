@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.contrib import auth
-from django.contrib.auth.models import User, Permission
+from django.contrib.auth.models import Group, User, Permission
 from django.core import mail
 from django.db.models import Q
 from django.shortcuts import render, redirect
@@ -43,6 +43,11 @@ def login(request):
         elif request.POST.get('request') == 'register':
             user = User.objects.create_user(request.POST.get('username'), email=request.POST.get('email'), password=request.POST.get('password'))
             user.save()
+
+            default_group = Group.objects.get(name='default')
+            if default_group:
+                default_group.user_set.add(user)
+
             if settings.EMAIL_HOST:
                 mail.send_mail('OACPL Registration', 'You have successfully registered to the Ontario Association of Child Protection Lawyers!', settings.EMAIL_HOST_USER, [request.POST.get('email')], html_message=render_to_string('email.html', {'content': 'You have successfully registered to the Ontario Association of Child Protection Lawyers!', 'name': user.username, 'base_url': settings.BASE_URL}))
             if request.POST.get('newsletter'):
