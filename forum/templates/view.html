@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <script>
+        $(function () {
+            $('#my-posts').popover({
+                title: 'My Posts',
+                placement: 'bottom',
+                html: true,
+                content: '<ul class="list-group">{% if myPosts.count == 0 %}None{% endif %}{% for post in myPosts %}<a href="{% url 'post' post.id  %}" class="list-group-item list-group-item-action">{{ post.title }}</a>{% endfor %}</ul>'
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid bg-dark-primary">
+        <div class="container py-3">
+            <div class="row">
+                <div class="col-12">
+                    <div class="float-right">
+                        {% if request.user.is_authenticated %}
+                            <i id="my-posts" class="curs-pointer text-white fa fa-comments fa-2x mr-2"></i>
+                        {% endif %}
+                        {% if perms.forum.add_post %}
+                            <i id="create-post" class="curs-pointer text-white fa fa-plus fa-2x" data-toggle="modal"
+                               data-target="#create-post-modal"></i>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% if threads %}
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <h3 class="text-white">Threads</h3>
+                        <ul class="list-group">
+                            {% for thread in threads %}
+                                <a href="{% url 'forum' thread.id %}"
+                                   class="list-group-item list-group-item-action">{{ thread.topic }}</a>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="text-white d-inline">Posts</h3>
+                    <ul class="list-group">
+                        {% for post in posts %}
+                            <a href="{% url 'post' post.id %}"
+                               class="list-group-item list-group-item-action">{{ post.title }}</a>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="create-post-modal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create New Post</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-12">
+                        <form>
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input class="form-control" name="title">
+                            </div>
+                            <div class="form-group">
+                                <label for="thread">Topic</label>
+                                <select class="form-control" name="thread">
+                                    {% for thread in threads %}
+                                        <option value="{{ thread.id }}">{{ thread.topic }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="title">Body</label>
+                                <textarea class="form-control" name="body"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Create</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
