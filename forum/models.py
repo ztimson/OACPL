@@ -1,8 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from ckeditor_uploader.fields import RichTextUploadingField
-
 
 class Thread(models.Model):
     topic = models.CharField(max_length=255)
@@ -14,7 +12,7 @@ class Thread(models.Model):
 class Post(models.Model):
     topic = models.ForeignKey(Thread)
     title = models.CharField(max_length=255)
-    question = RichTextUploadingField()
+    question = models.TextField()
     creator = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -24,7 +22,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post)
-    reply = RichTextUploadingField()
+    reply = models.TextField()
     creator = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
 

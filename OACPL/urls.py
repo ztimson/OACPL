@@ -28,7 +28,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls, name='admin'),
     url(r'^attorney/(?P<id>\d+)', charter_members.views.index, name='attorney'),
     url(r'^caselaw/', case_law.views.browser, name='caselaw'),
-    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^contact/', main.views.contact, name='contact'),
     url(r'^experts/(?P<id>\d+)', expert_witnesses.views.viewer, name='expert'),
     url(r'^experts/', expert_witnesses.views.browser, name='experts'),
@@ -40,5 +39,5 @@ urlpatterns = [
     url(r'^media/secure/(?P<path>.*)$', protected_serve, {'document_root': os.path.join(settings.MEDIA_ROOT, 'secure')}, name='secure media'),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}, name='media'),
     url(r'^newsletter/subscribe', newsletters.views.subscribe, name='subscribe'),
-    url(r'^newsletter/', newsletters.views.newsletters, name='newsletters'),
+    url(r'^newsletter/', newsletters.views.newsletters, name='newsletters')
 ]
