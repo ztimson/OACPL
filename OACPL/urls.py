@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^experts/(?P<id>\d+)', expert_witnesses.views.viewer, name='expert'),
     url(r'^experts/', expert_witnesses.views.browser, name='experts'),
     url(r'^forum/post/(?P<post>\d*)', forum.views.post, name='post'),
+    url(r'^forum/comment', forum.views.comment, name='comment'),
     url(r'^forum/(?P<thread>\d*)?', forum.views.view, name='forum'),
     url(r'^login/', main.views.login, name='login'),
     url(r'^logout/', main.views.logout, name='logout'),

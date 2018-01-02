@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    <div class="container-fluid bg-dark-primary">
+        <div class="container py-3">
+            <div class="col-12 bg-white p-3">
+                <div class="col-12">
+                    <h2 class="mb-0">{{ post.title }}</h2>
+                    <small class="text-muted">Asked By: {{ post.creator }}</small>
+                </div>
+                <div class="col-12 mt-3">
+                    {{ post }}
+                </div>
+                {% for comment in comments %}
+                    <div class="col-12 bg-white p-3 mt-3 rounded" style="border: 1px solid rgba(0, 0, 0, 0.2">
+                        <div class="col-12">
+                            <small class="text-muted">Answered By: {{ comment.creator }}</small>
+                        <div class="w-100">
+                            {% autoescape off %}
+                                {{ comment }}
+                            {% endautoescape %}
+                        </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="col-12 bg-white mt-3 py-3" style="position: relative">
+                <div>
+                    <h5>Comment</h5>
+                    <form method="post" action="{% url 'comment' %}">
+                        {% csrf_token %}
+                        <input name="post" type="hidden" value="{{ post.id }}">
+                        <textarea class="form-control" name="comment" value="{{ comment }}"
+                                  {% if not request.user.is_authenticated or not perms.form.add_comment %}disabled{% endif %}></textarea>
+                        <button class="btn btn-primary float-right">Create</button>
+                    </form>
+                    {% if not request.user.is_authenticated %}
+                        <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">You must <a
+                                href="{% url 'login' %}">login</a> to comment</span>
+                    {% endif %}
+                    {% if request.user.is_authenticatednot and perms.form.add_comment %}
+                        <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">You do not have permission to comment</span>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
