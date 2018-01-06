@@ -89,3 +89,13 @@ ul {
 .breadcrumb {
     border-radius: 0 !important;
 }
+
+.error-msg {
+    color: #941c27;
+}
+
+.error-msg:before {
+    color: #941c27;
+    font-family: "FontAwesome";
+    content: "\f071";
+}
