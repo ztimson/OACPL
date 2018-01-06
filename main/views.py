@@ -44,9 +44,9 @@ def login(request):
             user = User.objects.create_user(request.POST.get('username'), email=request.POST.get('email'), password=request.POST.get('password'))
             user.save()
 
-            default_group = Group.objects.get(name='default')
+            default_group = Group.objects.filter(name='default')
             if default_group:
-                default_group.user_set.add(user)
+                default_group[0].user_set.add(user)
 
             if settings.EMAIL_HOST:
                 mail.send_mail('OACPL Registration', 'You have successfully registered to the Ontario Association of Child Protection Lawyers!', settings.EMAIL_HOST_USER, [request.POST.get('email')], html_message=render_to_string('email.html', {'content': 'You have successfully registered to the Ontario Association of Child Protection Lawyers!', 'name': user.username, 'base_url': settings.BASE_URL}))
@@ -56,7 +56,7 @@ def login(request):
                 perm = Permission.objects.get(codename='change_user')
                 admins = User.objects.filter(Q(groups__permissions=perm) | Q(user_permissions=perm) | Q(is_superuser=True)).distinct().values_list('email', flat=True)
                 email = user.email
-                mail.send_mail('OACPL Case Law Request', '%(email)s has requested case law access.', settings.EMAIL_HOST_USER, admins, html_message=render_to_string('email.html', {'content': '<a href="#">%(email)s</a> has requested case law access.', 'base_url': settings.BASE_URL}))
+                mail.send_mail('OACPL Case Law Request', '%(email)s has requested case law access.' % locals(), settings.EMAIL_HOST_USER, admins, html_message=render_to_string('email.html', {'content': '<a href="#">%(email)s</a> has requested case law access.', 'base_url': settings.BASE_URL}))
             auth.login(request, user)
             return redirect('/')
     else:
