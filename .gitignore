@@ -3,4 +3,5 @@
 /*/migrations
 /OACPL/settings.py
 /db.sqlite3
-/static/
+/static/admin
+/static/bootstrap_admin
