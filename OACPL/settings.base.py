@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'expert_witnesses',
     'forum.apps.ForumConfig',
     'main.apps.MainConfig',
-    'newsletters.apps.NewslettersConfig'
+    'newsletters.apps.NewslettersConfig',
+    'tinymce'
 ]
 
 MIDDLEWARE = [
@@ -142,5 +143,3 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-
-CKEDITOR_UPLOAD_PATH = 'ckeditor'

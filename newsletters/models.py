@@ -2,9 +2,11 @@ from django.db import models
 from django.contrib.auth.admin import User
 from django.utils import timezone
 
+from tinymce.models import HTMLField
+
 
 class Newsletter(models.Model):
-    body = models.TextField()
+    body = HTMLField()
     created = models.DateTimeField(auto_now_add=True)
     creator = models.ForeignKey(User)
     publish = models.DateTimeField(default=timezone.now)

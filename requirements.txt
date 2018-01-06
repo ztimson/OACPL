@@ -2,3 +2,4 @@ bootstrap-admin==0.3.7.1
 Django==1.11.5
 Pillow==4.2.1
 requests==2.11.1
+django-tinymce4-lite==1.7.0
