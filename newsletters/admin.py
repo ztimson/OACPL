@@ -28,7 +28,6 @@ class NewsletterAdmin(admin.ModelAdmin):
     def save_model(self, request, instance, form, change):
         user = request.user
         instance = form.save(commit=False)
-        instance.body = instance.body.replace('src="', 'src="' + settings.BASE_URL)
         instance.creator = user
         instance.save()
         return instance
