@@ -1,0 +1,11 @@
+version: 1
+
+services:
+
+  db:
+    image: sqlite3
+
+  web:
+    command: python3 manage.py runserver
+    image: django
+    build: .
