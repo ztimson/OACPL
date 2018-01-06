@@ -1,11 +1,16 @@
-version: 1
+version: '3'
 
 services:
 
   db:
-    image: sqlite3
+    image: postgres
 
   web:
-    command: python3 manage.py runserver
-    image: django
     build: .
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
