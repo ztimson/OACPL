@@ -6,45 +6,126 @@
         <div class="container py-3">
             <div class="col-12 bg-white p-3">
                 <div class="col-12">
+                    {% if post.creator == user and not post.resolved or perms.forum.change_post and not post.resolved %}
+                        <div class="btn-group float-right">
+                            <button class="btn" data-toggle="modal" data-target="#editModal"><i class="fa fa-pencil"></i></button>
+                            {% if post.creator == user or perms.forum.delete_post %}
+                                <button class="btn" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash"></i></button>
+                            {% endif %}
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#closeModal">Close</button>
+                        </div>
+                    {% endif %}
                     <h2 class="mb-0">{{ post.title }}</h2>
-                    <small class="text-muted">Asked By: {{ post.creator }}</small>
+                    <span class="text-muted">
+                        {% if post.resolved %}<span class="badge badge-sm badge-danger">Closed</span> {% endif %}
+                        Asked By: {{ post.creator }}, {{ post.created | date }}
+                    </span>
+                    <hr>
                 </div>
-                <div class="col-12 mt-3">
-                    {{ post }}
+                <div class="col-12 my-3">
+                    {{ post.question | safe }}
                 </div>
-                {% for comment in comments %}
-                    <div class="col-12 bg-white p-3 mt-3 rounded" style="border: 1px solid rgba(0, 0, 0, 0.2">
-                        <div class="col-12">
-                            <small class="text-muted">Answered By: {{ comment.creator }}</small>
-                        <div class="w-100">
-                            {% autoescape off %}
-                                {{ comment }}
-                            {% endautoescape %}
-                        </div>
-                        </div>
+                {% if comments %}
+                    <div class="col-12 mt-5">
+                        <h4>Answers</h4>
+                        <ul class="list-group w-100">
+                            {% for comment in comments %}
+                                <li class="list-group-item">
+                                    <span class="text-muted">{{ comment.creator }}, {{ comment.created | date }}</span>
+                                    {% autoescape off %}
+                                        {{ comment }}
+                                    {% endautoescape %}
+                                </li>
+                            {% endfor %}
+                        </ul>
                     </div>
-                {% endfor %}
+                {% endif %}
             </div>
 
-            <div class="col-12 bg-white mt-3 py-3" style="position: relative">
-                <div>
-                    <h5>Comment</h5>
-                    <form method="post" action="{% url 'comment' %}">
-                        {% csrf_token %}
-                        <input name="post" type="hidden" value="{{ post.id }}">
-                        <textarea class="form-control" name="comment" value="{{ comment }}"
-                                  {% if not request.user.is_authenticated or not perms.form.add_comment %}disabled{% endif %}></textarea>
-                        <button class="btn btn-primary float-right">Create</button>
-                    </form>
-                    {% if not request.user.is_authenticated %}
-                        <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">You must <a
-                                href="{% url 'login' %}">login</a> to comment</span>
-                    {% endif %}
-                    {% if request.user.is_authenticatednot and perms.form.add_comment %}
-                        <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">You do not have permission to comment</span>
-                    {% endif %}
+            {% if not post.resolved and perms.forum.add_comment %}
+                <div class="col-12 bg-white mt-3 py-3" style="overflow: auto">
+                    <div class="col-12">
+                        <h5>Comment</h5>
+                        <form method="post">
+                            <div>
+                                {% csrf_token %}
+                                <input type="hidden" name="request" value="comment">
+                                {{ form.reply }}
+                                <button class="btn btn-primary float-right mt-3">Create</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
+            {% endif %}
+        </div>
+    </div>
 
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="request" value="edit">
+                        {{ editForm.question }}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" form="editForm">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Post</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you would like to delete this post? It cannot be undone.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="request" value="delete">
+                        <button class="btn"><i class="fa fa-trash"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="closeModal" tabindex="-1" role="dialog" aria-labelledby="closeModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Close Post</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you would like to close this issue? No one will be able to respond anylonger.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="request" value="resolve">
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#closeModal">Close</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

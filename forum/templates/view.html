@@ -1,13 +1,22 @@
 {% extends 'base.html' %}
+{% load bootstrap_tags %}
 
 {% block head %}
     <script>
         $(function () {
+            {% if form.errors %}
+                $('#create-post-modal').modal(show = true);
+            {% endif %}
+
             $('#my-posts').popover({
                 title: 'My Posts',
                 placement: 'bottom',
                 html: true,
                 content: '<ul class="list-group">{% if myPosts.count == 0 %}None{% endif %}{% for post in myPosts %}<a href="{% url 'post' post.id  %}" class="list-group-item list-group-item-action">{{ post.title }}</a>{% endfor %}</ul>'
+            });
+
+            $('#createPostButton').click(function () {
+                $('#createPost').submit();
             });
         });
     </script>
@@ -42,17 +51,22 @@
                     </div>
                 </div>
             {% endif %}
-            <div class="row">
-                <div class="col-12">
-                    <h3 class="text-white d-inline">Posts</h3>
-                    <ul class="list-group">
-                        {% for post in posts %}
-                            <a href="{% url 'post' post.id %}"
-                               class="list-group-item list-group-item-action">{{ post.title }}</a>
-                        {% endfor %}
-                    </ul>
+            {% if posts %}
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="text-white d-inline">{% if thread %}"{{ thread }}" {% endif %}Posts</h3>
+                        <ul class="list-group">
+                            {% for post in posts %}
+                                <a href="{% url 'post' post.id %}" class="list-group-item list-group-item-action">
+                                    {% if post.resolved %}<span class="badge badge-danger">Closed</span> {% endif %}
+                                    {{ post.title }}
+                                    <span class="float-right text-muted">{{ post.creator }}, {{ post.created | date }}</span>
+                                </a>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
     </div>
 
@@ -66,29 +80,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="col-12">
-                        <form>
-                            <div class="form-group">
-                                <label for="title">Title</label>
-                                <input class="form-control" name="title">
-                            </div>
-                            <div class="form-group">
-                                <label for="thread">Topic</label>
-                                <select class="form-control" name="thread">
-                                    {% for thread in threads %}
-                                        <option value="{{ thread.id }}">{{ thread.topic }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="title">Body</label>
-                                <textarea class="form-control" name="body"></textarea>
-                            </div>
-                        </form>
-                    </div>
+                    <form id="createPost" method="post">
+                        {% csrf_token %}
+                        {{ form | as_bootstrap }}
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Create</button>
+                    <button id="createPostButton" type="button" class="btn btn-primary">Create</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
