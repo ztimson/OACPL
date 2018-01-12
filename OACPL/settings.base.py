@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_URL = 'http://oacpl.zakscode.com'
+BASE_URL = 'http://oacpl.org'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -95,11 +95,12 @@ WSGI_APPLICATION = 'OACPL.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432,
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'oacpl',
+        'USER': 'root',
+        'PASSWORD': 'b5q?E8bhE7br*~)Y',
+        'HOST': 'localhost',
+        'PORT': 3306,
     }
 }
 
