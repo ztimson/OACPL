@@ -55,8 +55,7 @@ def login(request):
             if request.POST.get('caselaw'):
                 perm = Permission.objects.get(codename='change_user')
                 admins = User.objects.filter(Q(groups__permissions=perm) | Q(user_permissions=perm) | Q(is_superuser=True)).distinct().values_list('email', flat=True)
-                email = user.email
-                mail.send_mail('OACPL Case Law Request', '%(email)s has requested case law access.' % locals(), settings.EMAIL_HOST_USER, admins, html_message=render_to_string('email.html', {'content': '<a href="#">%(email)s</a> has requested case law access.', 'base_url': settings.BASE_URL}))
+                mail.send_mail('OACPL Case Law Request', '{} {} ({}) has requested access to case law'.format(user.first_name, user.last_name, user.email), settings.EMAIL_HOST_USER, admins, html_message=render_to_string('email.html', {'content': '<a href="#">%(email)s</a> has requested case law access.', 'base_url': settings.BASE_URL}))
             auth.login(request, user)
             return redirect('/')
     else:
