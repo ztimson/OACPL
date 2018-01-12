@@ -15,7 +15,7 @@
             <div class="col-lg-6 pt-3 bg-light-blue">
                 <div class="col-lg-6">
                     <h2 class="d-none d-lg-inline text-dark-primary">{{ attorney.name }}</h2>
-                    <p>{{ attorney.biography | linebreaks }}</p>
+                    <p>{{ attorney.biography | safe }}</p>
                 </div>
             </div>
         </div>
