@@ -17,12 +17,19 @@
             <div class="row">
                 <div class="col-xs-12 col-md-9 py-3">
                     <div>
-                        <h3>{{ expert.name }}</h3>
-                        {% if expert.institute %}
-                            <i class="fa fa-institution"></i> {{ expert.institute }}
-                        {% else %}
-                            <span class="text-muted"><i class="fa fa-institution"></i> No Institute</span>
+                        <h3 class="mb-0">{{ expert.name }}</h3>
+                        {% if expert.CV and perms.expert_witnesses.view_cv %}
+                            <a href="/media/{{ expert.CV }}" target="_blank">
+                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Download CV
+                            </a>
                         {% endif %}
+                        <div>
+                            {% if expert.institute %}
+                                <i class="fa fa-institution"></i> {{ expert.institute }}
+                            {% else %}
+                                <span class="text-muted"><i class="fa fa-institution"></i> No Institute</span>
+                            {% endif %}
+                        </div>
                     </div>
                     <div class="d-md-none mt-5">
                         <h5 class="ml-1">Expertise</h5>

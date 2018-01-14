@@ -22,7 +22,7 @@ class Case(models.Model):
 
     published = models.DateField()
     headings = models.ManyToManyField(Heading)
-    pdf = models.FileField('PDF', upload_to='secure', validators=[validate_file_extension])
+    pdf = models.FileField('PDF', upload_to='case_law', validators=[validate_file_extension])
     synopsis = models.TextField()
 
     def __str__(self):

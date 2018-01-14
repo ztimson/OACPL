@@ -8,5 +8,5 @@ admin.site.register(AreaOfExpertise)
 
 @admin.register(Expert)
 class ExpertiseAdmin(admin.ModelAdmin):
-    fields = ['name', 'institute', 'expertise', 'cases']
+    fields = ['name', 'institute', 'CV', 'expertise', 'cases']
     filter_horizontal = ('expertise', 'cases')

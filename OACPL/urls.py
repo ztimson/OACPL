@@ -16,8 +16,15 @@ import newsletters.views
 
 
 @login_required
-def protected_serve(request, path, document_root=None, show_indexes=False):
+def serve_case(request, path, document_root=None, show_indexes=False):
     if not request.user.has_perm('view_pdf'):
+        return Http404()
+    return serve(request, path, document_root, show_indexes)
+
+
+@login_required
+def serve_cv(request, path, document_root=None, show_indexes=False):
+    if not request.user.has_perm('view_cv'):
         return Http404()
     return serve(request, path, document_root, show_indexes)
 
@@ -35,7 +42,8 @@ urlpatterns = [
     url(r'^forum/(?P<thread>\d*)?', forum.views.view, name='forum'),
     url(r'^login/', main.views.login, name='login'),
     url(r'^logout/', main.views.logout, name='logout'),
-    url(r'^media/secure/(?P<path>.*)$', protected_serve, {'document_root': os.path.join(settings.MEDIA_ROOT, 'secure')}, name='secure media'),
+    url(r'^media/case_law/(?P<path>.*)$', serve_case, {'document_root': os.path.join(settings.MEDIA_ROOT, 'case_law')}, name='media caselaw'),
+    url(r'^media/cv/(?P<path>.*)$', serve_cv, {'document_root': os.path.join(settings.MEDIA_ROOT, 'cv')}, name='media cv'),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}, name='media'),
     url(r'^members', charter_members.views.all, name='members'),
     url(r'^newsletter/unsubscribe', newsletters.views.unsubscribe, name='unsubscribe'),
