@@ -15,16 +15,20 @@
     <div class="container-fluid bg-dark-primary">
         <div class="container py-3">
             {% if request.user.is_anonymous %}
-                <button class="btn btn-secondary mx-auto d-block mb-3" data-toggle="modal" data-target="#newsletter-modal">Subscribe To The Newsletter</button>
+                <button class="btn btn-secondary mx-auto d-block mb-3" data-toggle="modal"
+                        data-target="#subscribeModal">Subscribe To The Newsletter
+                </button>
             {% endif %}
             {% for newsletter in newsletters %}
                 <div class="col-12 p-0 mb-3 bg-white newsletter">
-                    <div class="p-3 newsletter-header" data-toggle="collapse" data-target="#newsletter-body-{{ newsletter.id }}" aria-expanded="false" aria-controls="newsletter-body-{{ newsletter.id }}">
+                    <div class="p-3 newsletter-header" data-toggle="collapse"
+                         data-target="#newsletter-body-{{ newsletter.id }}" aria-expanded="false"
+                         aria-controls="newsletter-body-{{ newsletter.id }}">
                         <h2>{{ newsletter.subject }}</h2>
                         <span class="text-muted">By: {{ newsletter.creator }}</span>
                         <span class="text-muted float-right">{{ newsletter.publish }}</span>
                     </div>
-                    <div  id="newsletter-body-{{ newsletter.id }}" class="bg-light-blue collapse">
+                    <div id="newsletter-body-{{ newsletter.id }}" class="bg-light-blue collapse">
                         <div class="p-3" style="overflow:hidden;">
                             {{ newsletter.body | safe }}
                         </div>
@@ -34,55 +38,34 @@
         </div>
     </div>
 
-    <div id="newsletter-modal" class="modal fade">
+    <div id="subscribeModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-body">
-                    <div class="col-12">
-                        <h3 class="modal-title text-dark-primary"><i class="fa fa-envelope-o"></i> Newsletter Sign Up</h3>
-                        <div class="my-3">
-                            <p>
-                                Want to keep up to date with all our latest news?
-                                <br>
-                                Enter your email below to be added to our mailing list.
-                            </p>
-                            <div id="emailInputGroup" class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
-                                <input id="email" class="form-control" type="email">
-                            </div>
-                        </div>
-                        <div class="float-right">
-                            <button id="subscribe" type="button" class="btn btn-primary"><i class="fa fa-check-circle"></i> Subscribe</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark-primary">Newsletter Sign Up</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-
+                <div class="modal-body">
+                    Want to keep up to date with all our latest news?
+                    <br>
+                    Enter your email below to be added to our mailing list.
+                    <form id="subscribeForm" method="post">
+                        {% csrf_token %}
+                        <div class="input-group pt-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-envelope-o"></i></span>
+                            </div>
+                            <input name="email" class="form-control" type="email">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="subscribe" type="submit" form="subscribeForm" class="btn btn-primary">Subscribe</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-
-    <script>
-        $('#subscribe').click(function() {
-            var email = $('#email').val();
-            if(email && email.match(/.+@.+\..+/g)) {
-                var csrfToken = $("[name='csrfmiddlewaretoken']").val();
-                $.post('/newsletter/subscribe', {csrfmiddlewaretoken: csrfToken, email: email}, function(resp) {
-                    if(resp.success) {
-                        $('#email').val('');
-                        $('#newsletter-modal').modal('hide');
-                    } else {
-                        $('#emailInputGroup').effect('shake')
-                    }
-                }, 'json');
-            } else {
-                $('#emailInputGroup').effect('shake')
-            }
-        });
-
-        if(!sessionStorage.getItem('newsletter') && {% if request.user.is_anonymous %} true {% else %} false {% endif %}) {
-            $('#newsletter-modal').modal('show');
-            sessionStorage.setItem('newsletter', true);
-        }
-    </script>
 {% endblock %}
