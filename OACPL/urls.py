@@ -37,6 +37,7 @@ urlpatterns = [
     url(r'^logout/', main.views.logout, name='logout'),
     url(r'^media/secure/(?P<path>.*)$', protected_serve, {'document_root': os.path.join(settings.MEDIA_ROOT, 'secure')}, name='secure media'),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}, name='media'),
+    url(r'^newsletter/unsubscribe', newsletters.views.unsubscribe, name='unsubscribe'),
     url(r'^newsletter/', newsletters.views.newsletters, name='newsletters'),
     url(r'^tinymce/', include('tinymce.urls'))
 ]
