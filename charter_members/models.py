@@ -4,6 +4,13 @@ from django.db import models
 from tinymce import HTMLField
 
 
+class Chapter(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
 class Position(models.Model):
     position_name = models.CharField(max_length=50)
 
@@ -13,6 +20,7 @@ class Position(models.Model):
 
 class Attorney(models.Model):
     biography = HTMLField(blank=True, null=True)
+    chapter = models.ForeignKey(Chapter, blank=True, null=True)
     email = models.CharField(max_length=255, blank=True, null=True)
     front_page = models.BooleanField(default=False)
     image = models.ImageField(upload_to='portraits', default='portraits/silhouette.png')
