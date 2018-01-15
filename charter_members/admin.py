@@ -12,5 +12,5 @@ class MemberAdmin(admin.ModelAdmin):
     list_display = ['name', 'position', 'chapter', 'phone_formatted', 'email', 'front_page', 'joined', 'thumbnail']
     list_filter = ['chapter', 'position', 'front_page', 'joined']
     search_fields = ['email', 'joined', 'name', 'chapter', 'position', 'website', 'phone', 'phone_formatted']
-    fields = ['image_preview', 'image', 'name', 'position', 'chapter', 'biography', 'phone', 'email', 'website', 'front_page', 'joined']
+    fields = ['image_preview', 'image', 'name', 'position', 'chapter', 'biography', 'phone', 'email', 'website', 'front_page', 'order', 'joined']
     readonly_fields = ['image_preview']

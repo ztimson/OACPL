@@ -13,7 +13,7 @@ from OACPL import settings
 
 
 def index(request):
-    attorneys = Attorney.objects.filter(front_page=True)
+    attorneys = Attorney.objects.filter(front_page=True).order_by('order')
     return render(request, 'index.html', {'attorneys': attorneys, 'contact': settings.EMAIL_CONTACT})
 
 

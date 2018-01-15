@@ -26,6 +26,7 @@ class Attorney(models.Model):
     image = models.ImageField(upload_to='portraits', default='portraits/silhouette.png')
     joined = models.DateField(blank=True, null=True)
     name = models.CharField(max_length=100)
+    order = models.IntegerField(blank=True, null=True, verbose_name='Order On Front Page')
     phone = models.CharField(max_length=10, blank=True, null=True)
     position = models.ForeignKey(Position)
     website = models.CharField(max_length=255, blank=True, null=True)
