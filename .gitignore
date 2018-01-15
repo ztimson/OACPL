@@ -2,5 +2,4 @@
 /.idea/
 /OACPL/settings.py
 /db.sqlite3
-/static/admin
-/static/bootstrap_admin
+/static/*

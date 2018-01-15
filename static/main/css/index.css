@@ -22,7 +22,7 @@ body {
 }
 
 hr {
-    border-top: 1px solid #377DBD;
+    border-top: 1px solid #377DBD !important;
 }
 
 ul {
@@ -33,17 +33,19 @@ ul {
 
 .baby {
     height: 500px;
-    background: url('https://static.wixstatic.com/media/14df13e4a2e04e39a34a477052234743.jpg/v1/fill/w_1904,h_801,al_c,q_85,usm_0.66_1.00_0.01/14df13e4a2e04e39a34a477052234743.webp') no-repeat fixed;
+    background: url('/static/main/img/baby.png') no-repeat fixed center;
+    background-size: cover;
 }
 
 .hands {
     height: 500px;
-    background: url('https://static.wixstatic.com/media/50c52cbd3372400da5552a320daa7569.jpg/v1/fill/w_1904,h_950,al_c,q_85,usm_0.66_1.00_0.01/50c52cbd3372400da5552a320daa7569.webp') no-repeat center center fixed;
+    background: url('/static/main/img/hands.png') no-repeat fixed center center;
+    background-size: cover;
 }
 
 .architecture {
-    background: url('https://static.wixstatic.com/media/5bfb6f_c9a631e8e43443cb9d7ad97133d9d83d.jpg/v1/fill/w_980,h_913,al_c,q_85,usm_0.66_1.00_0.01/5bfb6f_c9a631e8e43443cb9d7ad97133d9d83d.webp') no-repeat fixed;
-    background-size: 100%;
+    background: url('/static/main/img/architecture.png') no-repeat fixed;
+    background-size: cover;
 }
 
 /* Utilities */
@@ -88,14 +90,4 @@ ul {
 
 .breadcrumb {
     border-radius: 0 !important;
-}
-
-.error-msg {
-    color: #941c27;
-}
-
-.error-msg:before {
-    color: #941c27;
-    font-family: "FontAwesome";
-    content: "\f071";
 }
