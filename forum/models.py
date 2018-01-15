@@ -5,17 +5,17 @@ from tinymce.models import HTMLField
 
 
 class Thread(models.Model):
-    topic = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.topic
+        return self.name
 
 
 class Post(models.Model):
     creator = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
     resolved = models.BooleanField(default=False)
-    topic = models.ForeignKey(Thread)
+    thread = models.ForeignKey(Thread)
     title = models.CharField(max_length=255)
     question = HTMLField()
 

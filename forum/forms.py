@@ -18,7 +18,7 @@ class CreatePostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ['title', 'topic', 'question']
+        fields = ['title', 'thread', 'question']
 
 
 class EditPostForm(forms.ModelForm):

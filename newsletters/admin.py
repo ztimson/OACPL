@@ -5,7 +5,11 @@ from OACPL import settings
 from .models import Newsletter, Subscriber
 
 
-admin.site.register(Subscriber)
+@admin.register(Subscriber)
+class SubscriberAdmin(admin.ModelAdmin):
+    list_display = ['email', 'date']
+    list_filter = ['date']
+    search_fields = ['email']
 
 
 @admin.register(Newsletter)

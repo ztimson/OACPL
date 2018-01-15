@@ -8,15 +8,16 @@ admin.site.register(Thread)
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['title', 'resolved', 'topic', 'creator', 'created']
-    search_fields = ['title', 'resolved', 'topic', 'creator', 'created']
+    list_display = ['title', 'resolved', 'thread', 'creator', 'created']
+    list_filter = ['thread', 'resolved', 'created']
+    search_fields = ['title', 'resolved', 'thread', 'creator', 'created']
 
     def get_form(self, request, obj=None, **kwargs):
         if obj:
-            self.fields = ['creator', 'created', 'resolved', 'title', 'topic', 'question']
+            self.fields = ['creator', 'created', 'resolved', 'title', 'thread', 'question']
             self.readonly_fields = ['creator', 'created']
         else:
-            self.fields = ['title', 'topic', 'question']
+            self.fields = ['title', 'thread', 'question']
             self.readonly_fields = []
         return super(PostAdmin, self).get_form(request, obj, **kwargs)
 

@@ -24,8 +24,8 @@ def view(request, thread=None):
         posts = Post.objects.filter(resolved=False).order_by('-created')[:10]
     else:
         threads = None
-        thread_name = Thread.objects.get(id=thread).topic
-        posts = Post.objects.filter(topic=thread).order_by('-created')
+        thread_name = Thread.objects.get(id=thread).name
+        posts = Post.objects.filter(thread=thread).order_by('-created')
     return render(request, 'view.html', {'threads': threads, 'posts': posts, 'myPosts': my_posts, 'thread': thread_name, 'form': form})
 
 
