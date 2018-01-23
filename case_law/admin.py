@@ -9,4 +9,4 @@ admin.site.register(Heading)
 class DecisionAdmin(admin.ModelAdmin):
     fields = ['synopsis', 'headings', 'published', 'pdf']
     filter_horizontal = ['headings']
-    list_display = ['synopsis', 'published']
+    list_display = ['id', 'synopsis', 'published']
