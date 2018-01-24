@@ -2,7 +2,7 @@ from django import forms
 
 from tinymce import TinyMCE
 
-from .models import Comment, Post, Thread
+from .models import Comment, Post
 
 
 class CommentForm(forms.ModelForm):
