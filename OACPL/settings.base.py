@@ -148,4 +148,4 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-YOUTUBE_CONFERENCE = 'https://www.youtube.com/embed/m2YpX4Fma2c'
+YOUTUBE_CONFERENCE = None
