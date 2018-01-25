@@ -12,4 +12,5 @@ def index(request, id):
 def all(request):
     region = Region.objects.all().order_by('name')
     attorneys = Attorney.objects.all().annotate(Count('region'))
-    return render(request, 'all.html', {'region': region, 'attorneys': attorneys})
+    other = Attorney.objects.filter(region=None).count() > 0
+    return render(request, 'all.html', {'region': region, 'attorneys': attorneys, 'other': other})
