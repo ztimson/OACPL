@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_forms_bootstrap',
     'expert_witnesses',
     'forum.apps.ForumConfig',
     'main.apps.MainConfig',
