@@ -73,7 +73,7 @@ def reset_token(request):
         token = ''.join([chr(random.randrange(97, 122)) for i in range(8)])
         reset = ResetToken.objects.create(token=token, user=user)
         reset.save()
-        mail.send_mail('OACPL Password Recovery', 'To reset your password navigate to https://oacpl.org/reset and enter code: ' + token, settings.EMAIL_HOST_USER, [user.email], html_message=render_to_string('email.html', {'content': 'To reset your password click <a href="/reset?token={}">here</a>.<br><br>If the link does not work, please navigate to {}/reset and enter the following code: '.format(token, settings.BASE_URL, token), 'name': user.first_name + ' ' + user.last_name, 'base_url': settings.BASE_URL}))
+        mail.send_mail('OACPL Password Recovery', 'To reset your password navigate to https://oacpl.org/reset and enter code: ' + token, settings.EMAIL_HOST_USER, [user.email], html_message=render_to_string('email.html', {'content': 'To reset your password click <a href="/reset?token={}">here</a>.<br><br>If the link does not work, please navigate to {}/reset and enter the following code: {}'.format(token, settings.BASE_URL, token), 'name': user.first_name + ' ' + user.last_name, 'base_url': settings.BASE_URL}))
     return JsonResponse({'success': True})
 
 
