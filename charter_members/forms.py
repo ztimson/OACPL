@@ -2,8 +2,6 @@ from django.core import mail
 from django import forms
 from django.contrib.auth.models import Group, User
 
-from tinymce import TinyMCE
-
 from newsletters.models import Subscriber
 from .models import Attorney, Position
 from OACPL import settings
