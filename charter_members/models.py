@@ -1,10 +1,11 @@
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
 
 from tinymce import HTMLField
 
 
-class Chapter(models.Model):
+class Region(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
@@ -12,23 +13,27 @@ class Chapter(models.Model):
 
 
 class Position(models.Model):
-    position_name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.position_name
+        return self.name
 
 
 class Attorney(models.Model):
+    address = models.CharField(max_length=255)
     biography = HTMLField(blank=True, null=True)
-    chapter = models.ForeignKey(Chapter, blank=True, null=True)
-    email = models.CharField(max_length=255, blank=True, null=True)
+    call_to_bar = models.CharField(max_length=4, blank=True, null=True)
+    region = models.ForeignKey(Region, blank=True, null=True)
+    email = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=100)
     front_page = models.BooleanField(default=False)
     image = models.ImageField(upload_to='portraits', default='portraits/silhouette.png')
-    joined = models.DateField(blank=True, null=True)
-    name = models.CharField(max_length=100)
+    joined = models.DateField(default=timezone.now)
+    last_name = models.CharField(max_length=100)
+    lso = models.CharField(max_length=20, blank= True, null=True)
     order = models.IntegerField(blank=True, null=True, verbose_name='Order On Front Page')
-    phone = models.CharField(max_length=10, blank=True, null=True)
-    position = models.ForeignKey(Position)
+    phone = models.CharField(max_length=10)
+    position = models.ForeignKey(Position, blank=True, null=True)
     website = models.CharField(max_length=255, blank=True, null=True)
 
     def phone_formatted(self):
@@ -47,4 +52,4 @@ class Attorney(models.Model):
     image_preview.allow_tags = True
 
     def __str__(self):
-        return self.name
+        return self.first_name + ' ' + self.last_name

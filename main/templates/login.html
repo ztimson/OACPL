@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load widget_tweaks %}
 
 {% block head %}
     <style>
@@ -19,20 +20,20 @@
     </style>
 
     <script>
-        $(function() {
-            $('#register-mode').click(function() {
+        $(function () {
+            $('#register-mode').click(function () {
                 $('#login-form').collapse('hide');
                 $('#register-form').collapse('show');
                 $('#reset-form').collapse('hide');
             });
 
-            $('#login-mode').click(function() {
+            $('#login-mode').click(function () {
                 $('#login-form').collapse('show');
                 $('#register-form').collapse('hide');
                 $('#reset-form').collapse('hide');
             });
 
-            $('#forgot-password').click(function() {
+            $('#forgot-password').click(function () {
                 $('#login-form').collapse('hide');
                 $('#register-form').collapse('hide');
                 $('#reset-form').collapse('show');
@@ -42,12 +43,18 @@
                 $('#login-form input[name="username"]').css('border-color', '#ff0000').effect('shake');
                 $('#login-form input[name="password"]').css('border-color', '#ff0000').effect('shake');
             {% endif %}
+
+            {% if register.errors %}
+                $('#login-form').collapse('hide');
+                $('#register-form').collapse('show');
+                $('#reset-form').collapse('hide');
+            {% endif %}
         });
     </script>
 {% endblock %}
 
 {% block body %}
-    <div class="col-sm-11 col-md-6 col-lg-4 col-xl-2 mx-auto mt-5 p-5 login">
+    <div class="col-11 col-md-8 col-lg-6 col-xl-4 mx-auto mt-5 p-5 login">
         <div class="form">
             <div class="my-4">
                 <img src="{% static 'main/img/logo.png' %}" height="30px" width="auto">
@@ -62,32 +69,96 @@
             <form id="login-form" class="collapse show" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="request" value="login">
-                <input type="text" class="form-control mb-2 p-2" name="username" placeholder="Username"/>
+                <input type="text" class="form-control mb-2 p-2" name="username" placeholder="Email"/>
                 <input type="password" class="form-control mb-2 p-2" name="password" placeholder="Password"/>
                 <button class="btn btn-primary col-12 mb-2 p-2">login</button>
                 <p class="d-inline-block text-muted curs-pointer"><a id="register-mode">Register</a></p>
                 {% if failed %}
-                    <p class="d-inline-block text-muted curs-pointer float-right"><a id="forgot-password">Forgot Password</a></p>
+                    <p class="d-inline-block text-muted curs-pointer float-right"><a id="forgot-password">Forgot
+                        Password</a></p>
                 {% endif %}
             </form>
 
-            <form id="register-form" class="collapse" method="post">
+            <form id="register-form" class="collapse" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <input type="hidden" name="request" value="register">
-                <input type="text" class="form-control mb-2 p-2" name="username" placeholder="Username"/>
-                <input type="text" class="form-control mb-2 p-2" name="email" placeholder="Email"/>
-                <input type="password" class="form-control mb-2 p-2" name="password" placeholder="Password"/>
-                <input type="password" class="form-control mb-2 p-2" placeholder="Confirm Password"/>
-                <div class="col-12 px-0">
-                    <input id="newsletter" type="checkbox" class="mb-2 curs-pointer" name="newsletter">
-                    <label for="newsletter" class="curs-pointer">Newsletter</label>
+                {% if register.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {% for key, value in register.errors.items %}
+                            {{ value }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <h3>General Information</h3>
+                <div class="form-row">
+                    <div class="form-group col-6">
+                        {{ register.first_name|add_class:"form-control"|attr:"placeholder:First Name" }}
+                    </div>
+                    <div class="form-group col-6">
+                        {{ register.last_name|add_class:"form-control"|attr:"placeholder:Last Name" }}
+                    </div>
+                    <div class="form-group col-6">
+                        {{ register.password1|add_class:"form-control"|attr:"placeholder:Password" }}
+                    </div>
+                    <div class="form-group col-6">
+                        {{ register.password2|add_class:"form-control"|attr:"placeholder:Confirm Password" }}
+                    </div>
+                    <div class="form-group col-6">
+                        {{ register.phone|add_class:"form-control"|attr:"placeholder:Phone Number" }}
+                    </div>
+                    <div class="form-group col-6">
+                        {{ register.email|add_class:"form-control"|attr:"placeholder:Email" }}
+                    </div>
+                    <div class="form-group col-8">
+                        {{ register.address|add_class:"form-control"|attr:"placeholder:Address" }}
+                    </div>
+                    <div class="form-group col-4">
+                        {{ register.region|add_class:"form-control"}}
+                    </div>
+                    <div class="form-group col-12">
+                        {{ register.website|add_class:"form-control"|attr:"placeholder:Website" }}
+                    </div>
                 </div>
-                <div class="col-12 px-0">
-                    <input id="caselaw" type="checkbox" class="mb-2 curs-pointer" name="caselaw">
-                    <label for="caselaw" class="curs-pointer">Case Law Access</label>
+                <h3>Attorney Information</h3>
+                <div class="form-row">
+                    <div class="form-group col-6">
+                        {{ register.call_to_bar|add_class:"form-control"|attr:"placeholder:Year of Call to Bar" }}
+                    </div>
+                    <div class="form-group col-6">
+                        {{ register.lso|add_class:"form-control"|attr:"placeholder:LSO #" }}
+                    </div>
+                    <div class="form-group col-12">
+                        Portrait
+                        {{ register.image|add_class:"form-control" }}
+                    </div>
+                    <div class="form-group col-12">
+                        {{ register.biography|add_class:"form-control"|attr:"placeholder:Biography" }}
+                    </div>
                 </div>
+                <h3>Other</h3>
+                <div class="form-row">
+                    <div class="form-group col-12">
+                        <div class="form-check">
+                            {{ register.newsletter|add_class:"form-check-input" }} <label class="form-check-label">Receive
+                            newsletters</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-12">
+                        <div class="form-check">
+                            {{ register.case_law|add_class:"form-check-input" }} <label class="form-check-label">Request
+                            access to case law database</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-12">
+                        {{ register.provide_training|add_class:"form-control"|attr:"placeholder:Training I am willing to provide..." }}
+                    </div>
+                    <div class="form-group col-12">
+                        {{ register.request_training|add_class:"form-control"|attr:"placeholder:Training I would like to recieve..." }}
+                    </div>
+                </div>
+
                 <button class="btn btn-primary col-12 mb-2 p-2">Register</button>
-                <p class="text-muted curs-pointer"><a id="login-mode">Login</a></p>
+                <p class="d-inline-block text-muted curs-pointer"><a id="login-mode">Login</a></p>
             </form>
 
             <form id="reset-form" class="collapse" method="post">

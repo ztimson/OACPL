@@ -3,19 +3,19 @@
 {% block body %}
     <div class="container-fluid bg-dark-primary py-3">
         <div class="container">
-            {% for chapter in chapters %}
+            {% for region in region %}
                 <div class="row bg-white mb-5">
                     <div class="col-12 pt-3">
-                        <h2 class="text-dark-primary">{{ chapter }}</h2>
+                        <h2 class="text-dark-primary">{{ region }}</h2>
                         <hr style="border-top: 1px solid rgba(0,0,0,0.2) !important">
                         <div class="row">
                             {% for attorney in attorneys %}
-                                {% if attorney.chapter == chapter %}
+                                {% if attorney.region == region %}
                                     <a class="col-3 text-center pt-5" href="{% url 'attorney' attorney.id %}">
                                         <div>
                                             <img class="pb-3" src="/media/{{ attorney.image }}"
                                                  style="width: auto; max-width: 100%; height: 200px"/>
-                                            <h5 class="text-dark-primary">{{ attorney.name }}</h5>
+                                            <h5 class="text-dark-primary">{{ attorney.first_name }} {{ attorney.last_name }}</h5>
                                             <span class="text-light-primary">{{ attorney.position }}</span>
                                             <hr>
                                         </div>

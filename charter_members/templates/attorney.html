@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="row bg-dark-primary">
             <div class="col-lg-3 ml-auto">
-                <h2 class="d-lg-none text-white mt-3">{{ attorney.name }}</h2>
+                <h2 class="d-lg-none text-white mt-3">{{ attorney.first_name }} {{ attorney.last_name }}</h2>
                 <div class="p-2 my-3 shadow bg-white">
                     <img class="d-block mx-auto" src="/media/{{ attorney.image }}" style="max-width: 100%"/>
                 </div>
@@ -14,7 +14,7 @@
             </div>
             <div class="col-lg-6 pt-3 bg-light-blue">
                 <div class="col-lg-6">
-                    <h2 class="d-none d-lg-inline text-dark-primary">{{ attorney.name }}</h2>
+                    <h2 class="d-none d-lg-inline text-dark-primary">{{ attorney.first_name }} {{ attorney.last_name }}</h2>
                     <p>{{ attorney.biography | safe }}</p>
                 </div>
             </div>

@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'forum.apps.ForumConfig',
     'main.apps.MainConfig',
     'newsletters.apps.NewslettersConfig',
-    'tinymce'
+    'tinymce',
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [

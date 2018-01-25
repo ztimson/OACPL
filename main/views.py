@@ -1,14 +1,11 @@
 from django.http import JsonResponse
 from django.contrib import auth
-from django.contrib.auth.models import Group, User, Permission
 from django.core import mail
-from django.db.models import Q
 from django.shortcuts import render, redirect
-from django.template.loader import render_to_string
 
+from charter_members.forms import RegisterForm
 from OACPL.utils import url_fix_render_to_string
 from charter_members.models import Attorney
-from newsletters.models import Subscriber
 from OACPL import settings
 
 
@@ -33,33 +30,23 @@ def contact(request):
 
 def login(request):
     if request.method == 'POST':
-        if request.POST.get('request') == 'login':
+        if request.POST.get('request') == 'register':
+            register_form = RegisterForm(request.POST, request.FILES)
+            if register_form.is_valid():
+                user = register_form.save()
+                auth.login(request, user)
+                return redirect('/')
+        elif request.POST.get('request') == 'login':
             user = auth.authenticate(request, username=request.POST.get('username'), password=request.POST.get('password'))
             if user:
                 auth.login(request, user)
                 return redirect('/')
             else:
                 return render(request, 'login.html', {'navbar': False, 'footer': False, 'failed': True})
-        elif request.POST.get('request') == 'register':
-            user = User.objects.create_user(request.POST.get('username'), email=request.POST.get('email'), password=request.POST.get('password'))
-            user.save()
 
-            default_group = Group.objects.filter(name='default')
-            if default_group:
-                default_group[0].user_set.add(user)
-
-            if settings.EMAIL_HOST:
-                mail.send_mail('OACPL Registration', 'You have successfully registered to the Ontario Association of Child Protection Lawyers!', settings.EMAIL_HOST_USER, [request.POST.get('email')], html_message=render_to_string('email.html', {'content': 'You have successfully registered to the Ontario Association of Child Protection Lawyers!', 'name': user.username, 'base_url': settings.BASE_URL}))
-            if request.POST.get('newsletter'):
-                Subscriber.objects.create(email=request.POST.get('email'))
-            if request.POST.get('caselaw'):
-                perm = Permission.objects.get(codename='change_user')
-                admins = User.objects.filter(Q(groups__permissions=perm) | Q(user_permissions=perm) | Q(is_superuser=True)).distinct().values_list('email', flat=True)
-                mail.send_mail('OACPL Case Law Request', '{} {} ({}) has requested access to case law'.format(user.first_name, user.last_name, user.email), settings.EMAIL_HOST_USER, admins, html_message=render_to_string('email.html', {'content': '{} {} ({}) has requested access to case law'.format(user.first_name, user.last_name, user.email), 'base_url': settings.BASE_URL}))
-            auth.login(request, user)
-            return redirect('/')
-    else:
-        return render(request, 'login.html', {'navbar': False, 'footer': False})
+    if 'register_form' not in vars():
+        register_form = RegisterForm()
+    return render(request, 'login.html', {'navbar': False, 'footer': False, 'register': register_form})
 
 
 def logout(request):

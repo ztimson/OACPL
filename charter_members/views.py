@@ -1,7 +1,7 @@
 from django.db.models import Count
 from django.shortcuts import render
 
-from .models import Chapter, Attorney
+from .models import Region, Attorney
 
 
 def index(request, id):
@@ -10,6 +10,6 @@ def index(request, id):
 
 
 def all(request):
-    chapters = Chapter.objects.all().order_by('name')
-    attorneys = Attorney.objects.all().annotate(Count('chapter'))
-    return render(request, 'all.html', {'chapters': chapters, 'attorneys': attorneys})
+    region = Region.objects.all().order_by('name')
+    attorneys = Attorney.objects.all().annotate(Count('region'))
+    return render(request, 'all.html', {'region': region, 'attorneys': attorneys})
