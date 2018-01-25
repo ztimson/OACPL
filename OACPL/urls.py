@@ -48,5 +48,7 @@ urlpatterns = [
     url(r'^members', charter_members.views.all, name='members'),
     url(r'^newsletter/unsubscribe', newsletters.views.unsubscribe, name='unsubscribe'),
     url(r'^newsletter/', newsletters.views.newsletters, name='newsletters'),
+    url(r'^resetToken', main.views.reset_token, name='reset token'),
+    url(r'^reset/', main.views.reset, name='reset'),
     url(r'^tinymce/', include('tinymce.urls'))
 ]

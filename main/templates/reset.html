@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <style>
+        body {
+            background-color: #0F4C85;
+        }
+
+        .login {
+            background-color: #F7F7F7;
+            border-radius: 2px;
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3)
+        }
+
+        .btn, .form-control {
+            border-radius: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="col-11 col-md-8 col-lg-6 col-xl-4 mx-auto mt-5 p-5 login">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-4">
+                <img src="{% static 'main/img/logo.png' %}" height="30px" width="auto">
+                <a class="navbar-brand text-dark-primary" href="{% url 'home' %}" style="vertical-align: sub">
+                    OACPL
+                    <div class="d-inline-block d-sm-none">
+                        OACPL
+                    </div>
+                </a>
+            </div>
+            <p>Please enter new password</p>
+            <input class="form-control mb-3" name="token" value="{% if token %}{{ token }}{% endif %}" type="{% if token %}hidden{% else %}text{% endif %}" placeholder="Code">
+            <input class="form-control mb-3" name="password1" type="password" placeholder="Password">
+            <input class="form-control mb-3" name="password2" type="password" placeholder="Confirm Password">
+            <button id="reset" class="btn btn-primary col-12 mb-2 p-2">Reset</button>
+        </form>
+    </div>
+{% endblock %}

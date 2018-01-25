@@ -1,8 +1,13 @@
+import random
+
 from django.http import JsonResponse
 from django.contrib import auth
 from django.core import mail
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
 
+from OACPL.utils import render_to_string
+from .models import ResetToken
 from charter_members.forms import RegisterForm
 from OACPL.utils import url_fix_render_to_string
 from charter_members.models import Attorney
@@ -47,6 +52,29 @@ def login(request):
     if 'register_form' not in vars():
         register_form = RegisterForm()
     return render(request, 'login.html', {'navbar': False, 'footer': False, 'register': register_form})
+
+
+def reset(request):
+    if request.method == 'POST':
+        if request.POST.get('password1') == request.POST.get('password2'):
+            reset_req = ResetToken.objects.filter(token=request.POST.get('token')).first()
+            reset_req.user.set_password(request.POST.get('password1'))
+            reset_req.user.save()
+            auth.login(request, reset_req.user)
+            reset_req.delete()
+            return redirect('/')
+
+    return render(request, 'reset.html', {'navbar': False, 'footer': False, 'token': request.GET.get('token')})
+
+
+def reset_token(request):
+    user = User.objects.filter(email=request.POST.get('email')).first()
+    if user:
+        token = ''.join([chr(random.randrange(97, 122)) for i in range(8)])
+        reset = ResetToken.objects.create(token=token, user=user)
+        reset.save()
+        mail.send_mail('OACPL Password Recovery', 'To reset your password navigate to https://oacpl.org/reset and enter code: ' + token, settings.EMAIL_HOST_USER, [user.email], html_message=render_to_string('email.html', {'content': 'To reset your password click <a href="/reset?token={}">here</a>.<br><br>If the link does not work, please navigate to {}/reset and enter the following code: '.format(token, settings.BASE_URL, token), 'name': user.first_name + ' ' + user.last_name, 'base_url': settings.BASE_URL}))
+    return JsonResponse({'success': True})
 
 
 def logout(request):
