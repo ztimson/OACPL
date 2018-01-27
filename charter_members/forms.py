@@ -27,10 +27,11 @@ class RegisterForm(forms.ModelForm):
     password1 = forms.CharField(widget=forms.PasswordInput(), validators=[password_length])
     password2 = forms.CharField(widget=forms.PasswordInput())
     provide_training = forms.CharField(max_length=255, required=False, label='Offer Training For...')
+    tos = forms.BooleanField(initial=False, required=True)
 
     class Meta:
         model = Attorney
-        fields = ['first_name', 'last_name', 'region', 'password1', 'password2', 'image', 'email', 'address', 'phone', 'website', 'call_to_bar', 'lso', 'biography', 'provide_training', 'request_training', 'case_law', 'newsletter']
+        fields = ['first_name', 'last_name', 'region', 'password1', 'password2', 'image', 'email', 'address', 'phone', 'website', 'call_to_bar', 'lso', 'biography', 'provide_training', 'request_training', 'case_law', 'newsletter', 'tos']
 
     def clean(self):
         cleaned_data = super().clean()
