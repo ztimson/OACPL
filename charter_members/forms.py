@@ -49,11 +49,6 @@ class RegisterForm(forms.ModelForm):
             user.position = member
         user.save()
 
-        # Add user to default Group
-        default_group = Group.objects.filter(name='default').first()
-        if default_group:
-            default_group.user_set.add(user)
-
         # Send confirmation email
         mail.send_mail('OACPL Registration', 'You have successfully registered to the Ontario Association of Child Protection Lawyers!', settings.EMAIL_HOST_USER, [user.email], html_message=render_to_string('email.html', {'content': 'You have successfully registered to the Ontario Association of Child Protection Lawyers!', 'name': user.first_name + ' ' + user.last_name, 'base_url': settings.BASE_URL}))
 
@@ -74,4 +69,10 @@ class RegisterForm(forms.ModelForm):
         # Create Auth
         auth = User.objects.create_user(user.email, first_name=user.first_name, last_name=user.last_name, email=user.email, password=self.cleaned_data['password1'])
         auth.save()
+
+        # Add user to default Group
+        default_group = Group.objects.filter(name='default').first()
+        if default_group:
+            default_group.user_set.add(auth)
+
         return auth
