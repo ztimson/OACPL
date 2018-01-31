@@ -52,7 +52,7 @@ class RegisterForm(forms.ModelForm):
         # Add user to default Group
         default_group = Group.objects.filter(name='default').first()
         if default_group:
-            default_group[0].user_set.add(user)
+            default_group.user_set.add(user)
 
         # Send confirmation email
         mail.send_mail('OACPL Registration', 'You have successfully registered to the Ontario Association of Child Protection Lawyers!', settings.EMAIL_HOST_USER, [user.email], html_message=render_to_string('email.html', {'content': 'You have successfully registered to the Ontario Association of Child Protection Lawyers!', 'name': user.first_name + ' ' + user.last_name, 'base_url': settings.BASE_URL}))
