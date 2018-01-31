@@ -4,13 +4,15 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="description" content="The Ontario Association of Child Protection Lawyers started in Spring 2017 in Windsor, Ontario with a group of Family Lawyers who saw a need to increase the level of advocacy for children, families, and communities that were struggling in terms of Child Welfare. ">
+    <meta name="description"
+          content="The Ontario Association of Child Protection Lawyers started in Spring 2017 in Windsor, Ontario with a group of Family Lawyers who saw a need to increase the level of advocacy for children, families, and communities that were struggling in terms of Child Welfare. ">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>OACPL{% if title %} - {{ title }}{% endif %}</title>
-    <link rel="icon" type="image/png" href="{% static 'main/img/logo.png' %}" />
-    <link rel="stylesheet" href="{% static 'main/css/index.css' %}" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.3/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
+    <link rel="icon" type="image/png" href="{% static 'main/img/logo.png' %}"/>
+    <link rel="stylesheet" href="{% static 'main/css/index.css' %}"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway"/>
     <script src="https://use.fontawesome.com/d71773005c.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -18,10 +20,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
 
     <script>
-        $.ajaxSetup({beforeSend: function(xhr, settings){
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
                 xhr.setRequestHeader('X-CSRFToken',
                     '{{ csrf_token }}');
-            }});
+            }
+        });
     </script>
 
     {{ form.media }}
@@ -37,7 +41,8 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white py-4">
         <div class="container">
             <a class="navbar-brand text-dark-primary" href="{% url 'home' %}">
-                <img src="{% static 'main/img/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+                <img src="{% static 'main/img/logo.png' %}" width="30" height="30" class="d-inline-block align-top"
+                     alt="">
                 <div class="d-none d-sm-inline-block">
                     ONTARIO ASSOCIATION OF
                     <br>
@@ -50,7 +55,8 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown text-dark-primary">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">HOME</a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">HOME</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{% url 'home' %}">Front Page</a>
                             <a class="dropdown-item" href="{% url 'newsletters' %}">Newsletters</a>
@@ -71,7 +77,7 @@
                             <a class="nav-link" href="/admin">ADMIN PANEL</a>
                         </li>
                     {% endif %}
-                    {% if request.user.is_authenticated%}
+                    {% if request.user.is_authenticated %}
                         <li class="nav-item text-dark-primary">
                             <a class="nav-link" href="{% url 'logout' %}">LOGOUT</a>
                         </li>
@@ -83,12 +89,17 @@
                     {% endif %}
                 </ul>
             </div>
-            <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
         </div>
+
     </nav>
+    {% if banner.value %}
+        <div class="bg-danger w-100 text-center py-1">{{ banner.value | safe }}</div>
+    {% endif %}
 {% endif %}
 
 <!-- Content -->
@@ -99,7 +110,8 @@
     <!-- Footer -->
     <footer class="container-fluid bg-white text-dark-primary py-3">
         <div class="container text-center">
-            <p class="mb-0">© 2017 Ontario Association of Child Protection Lawyers. Created By <a href="http://zakscode.com">Zak Timson</a></p>
+            <p class="mb-0">© 2017 Ontario Association of Child Protection Lawyers. Created By <a
+                    href="http://zakscode.com">Zak Timson</a></p>
         </div>
     </footer>
 {% endif %}

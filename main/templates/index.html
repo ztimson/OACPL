@@ -5,7 +5,7 @@
     <script>
         $(function() {
             // Show modal for live youtube conference
-            {% if youtube %}
+            {% if popup_header.value %}
                 $('#liveModal').modal('show');
             {% endif %}
 
@@ -95,36 +95,7 @@
             <div class="row text-center">
                 <h2 class="mx-auto mb-5">OUR OBJECTIVES</h2>
                 <div style="font-size: 22px">
-                    <p>
-                        The Ontario Association of Child Protection Lawyers consists of parents council, children's council who also do parent side work, representatives of Native Canadian organizations,
-                        law students, and students-at-law who are completing their articles under the direction of parents council.
-                    </p>
-                    <p>
-                        It started in Spring 2017 in Windsor, Ontario with a
-                        group
-                        of Family Lawyers who saw a need to increase the level of advocacy for children, families, and
-                        communities
-                        that were struggling in terms of Child Welfare.
-                    </p>
-                    <p>
-                        The OACPL as an organization seeks to:
-                    </p>
-                    <p>
-                        - increase the efficiency and level of professional expertise offered by Child Protection Lawyers in
-                        Ontario
-                    </p>
-                    <p>
-                        - provide public and professional education and input from Recognized Child Protection Lawyers on Child
-                        Welfare Reform and Practice
-                    </p>
-                    <p>
-                        - provide an organized body of Recognized Child Protection Lawyers that advocate politically and
-                        socially on Child Welfare Matters in Ontario
-                    </p>
-                    <p>
-                        - encourage the highest standards of practice and support for children, families and communities
-                        affected by Child Protection Litigation.
-                    </p>
+                    {{ objectives.value | safe }}
                 </div>
             </div>
         </div>
@@ -224,18 +195,18 @@
         </a>
     </div>
 
-    {% if youtube %}
+    {% if popup_header.value %}
         <div id="liveModal" class="modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog modal-lg modal-fade" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-circle text-danger"></i> Live Conference</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">{{ popup_header.value | safe }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <iframe width="100%" height="400px" src="{{ youtube }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        {{ popup_body.value | safe }}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

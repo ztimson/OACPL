@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'newsletters.apps.NewslettersConfig',
     'tinymce',
-    'widget_tweaks'
+    'widget_tweaks',
+    'variables'
 ]
 
 MIDDLEWARE = [

@@ -149,13 +149,13 @@
                 <div class="form-row">
                     <div class="form-group col-12">
                         <div class="form-check">
-                            {{ register.newsletter|add_class:"form-check-input" }} <label class="form-check-label">Receive
+                            {{ register.newsletter|add_class:"form-check-input" }} <label for="id_newsletter" class="form-check-label">Receive
                             newsletters</label>
                         </div>
                     </div>
                     <div class="form-group col-12">
                         <div class="form-check">
-                            {{ register.case_law|add_class:"form-check-input" }} <label class="form-check-label">Request
+                            {{ register.case_law|add_class:"form-check-input" }} <label for="id_case_law" class="form-check-label">Request
                             access to case law database</label>
                         </div>
                     </div>
@@ -167,13 +167,7 @@
                     </div>
                     <div class="form-group col-12 my-3">
                         <div class="form-check">
-                            {{ register.tos|add_class:"form-check-input" }} <label class="form-check-label">
-                            I certify that I am a member in good standing of the Law Society of Ontario, practicing in
-                            the field of defence side child protection law, or am a member of the Rights Panel with the
-                            office of The Children's Lawyer, also practicing defence work, or am a law student, lawyer
-                            representing a band or Native Organization, or a student completing articles under the
-                            direction of one of the foregoing.
-                        </label>
+                            {{ register.tos|add_class:"form-check-input" }} <label for="id_tos" class="form-check-label">{{ terms.value }}</label>
                         </div>
                     </div>
                 </div>

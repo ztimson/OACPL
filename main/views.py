@@ -12,11 +12,16 @@ from charter_members.forms import RegisterForm
 from OACPL.utils import url_fix_render_to_string
 from charter_members.models import Attorney
 from OACPL import settings
+from variables.models import Variable
 
 
 def index(request):
     attorneys = Attorney.objects.filter(front_page=True).order_by('order')
-    return render(request, 'index.html', {'attorneys': attorneys, 'contact': settings.EMAIL_CONTACT, 'youtube': settings.YOUTUBE_CONFERENCE})
+    banner = Variable.objects.get(key='banner')
+    popup_header = Variable.objects.get(key='popup_header')
+    popup_body = Variable.objects.get(key='popup_body')
+    objectives = Variable.objects.get(key='objectives')
+    return render(request, 'index.html', {'attorneys': attorneys, 'contact': settings.EMAIL_CONTACT, 'youtube': settings.YOUTUBE_CONFERENCE, 'banner': banner, 'objectives': objectives, 'popup_header': popup_header, 'popup_body': popup_body})
 
 
 def contact(request):
@@ -34,6 +39,7 @@ def contact(request):
 
 
 def login(request):
+    terms = Variable.objects.get(key='terms')
     if request.method == 'POST':
         if request.POST.get('request') == 'register':
             register_form = RegisterForm(request.POST, request.FILES)
@@ -51,7 +57,7 @@ def login(request):
 
     if 'register_form' not in vars():
         register_form = RegisterForm()
-    return render(request, 'login.html', {'navbar': False, 'footer': False, 'register': register_form})
+    return render(request, 'login.html', {'navbar': False, 'footer': False, 'register': register_form, 'terms': terms})
 
 
 def reset(request):
