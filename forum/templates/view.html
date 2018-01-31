@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load bootstrap_tags %}
 
 {% block head %}
     <script>
@@ -82,7 +81,7 @@
                 <div class="modal-body">
                     <form id="createPost" method="post">
                         {% csrf_token %}
-                        {{ form | as_bootstrap }}
+                        {{ form }}
                     </form>
                 </div>
                 <div class="modal-footer">
