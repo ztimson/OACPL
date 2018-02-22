@@ -34,7 +34,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'info@oacpl.org'
 EMAIL_HOST_PASSWORD = 'e/j3_fAX'
 EMAIL_PORT = 587
-EMAIL_CONTACT = 'david.a.sandor@outlook.com'
 
 # Application definition
 
