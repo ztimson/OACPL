@@ -140,27 +140,7 @@
             </div>
             <div class="col-lg-7 py-5" style="background-color: rgba(0, 63, 120, 0.8)">
                 <div class="col-lg-8 pl-4">
-                    P.O. BOX 33010
-                    <br>
-                    LAKEVIEW R.O.
-                    <br>
-                    WINDSOR, ONTARIO
-                    <br>
-                    N8Y 0A2
-                    <br>
-                    Phone: (519) 566-1677
-                    <br>
-                    Fax: 1-226-318-0665
-                    <br>
-                    Email Care of David A. Sandor, Barrister & Solicitor, Acting Director:
-                    <br>
-                    {{ contact }}
-                    <br>
-                    <br>
-                    <br>
-                    For any general inquiries, please fill in the following contact form:
-                    <br>
-                    <br>
+                    {{ contact.value|safe }}
                     <div class="form-row">
                         <div id="contact-success" class="col-12 collapse" aria-expanded="false">
                             <div class=" alert alert-success">Successfully sent email!</div>

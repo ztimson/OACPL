@@ -21,7 +21,8 @@ def index(request):
     popup_header = Variable.objects.get(key='popup_header')
     popup_body = Variable.objects.get(key='popup_body')
     objectives = Variable.objects.get(key='objectives')
-    return render(request, 'index.html', {'attorneys': attorneys, 'contact': settings.EMAIL_CONTACT, 'youtube': settings.YOUTUBE_CONFERENCE, 'banner': banner, 'objectives': objectives, 'popup_header': popup_header, 'popup_body': popup_body})
+    contact = Variable.objects.get(key='contact')
+    return render(request, 'index.html', {'attorneys': attorneys, 'youtube': settings.YOUTUBE_CONFERENCE, 'banner': banner, 'objectives': objectives, 'popup_header': popup_header, 'popup_body': popup_body, 'contact': contact})
 
 
 def contact(request):
@@ -30,9 +31,11 @@ def contact(request):
     subject = request.POST.get('subject')
     body = request.POST.get('body')
 
+    contact_email = Variable.objects.get(key='contact_email')
+
     result = False
     if name is not None and email is not None and subject is not None and body is not None:
-        result = mail.send_mail('OACPL CONTACT: %(subject)s' % locals(), body, settings.EMAIL_HOST_USER, [settings.EMAIL_CONTACT],
+        result = mail.send_mail('OACPL CONTACT: %(subject)s' % locals(), body, settings.EMAIL_HOST_USER, [contact_email],
                                 html_message=url_fix_render_to_string('email.html', {'content': '<strong>Someone has messaged you via the website contact form!<br><br>Subject:</strong> %(subject)s<br><strong>From:</strong> %(name)s <%(email)s><br><br>%(body)s' % locals(), 'signature': ' '}))
 
     return JsonResponse({'success': True if result else False})
