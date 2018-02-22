@@ -1,5 +1,5 @@
 from django.db.models import Q
-from django.core import mail
+from django.core.mail import EmailMessage
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 from django.utils.html import strip_tags
@@ -19,7 +19,9 @@ class Command(BaseCommand):
         print('Found %s subscribers' % len(subscribers))
         for newsletter in newsletters:
             print('Sending newsletter: "%s"' % newsletter.subject)
-            mail.send_mail(newsletter.subject, strip_tags(newsletter.body), settings.EMAIL_HOST_USER, subscribers, html_message=url_fix_render_to_string('email.html', {'content': newsletter.body, 'unsubscribe': True}))
+            msg = EmailMessage(subject=newsletter.subject, body=url_fix_render_to_string('email.html', {'content': newsletter.body, 'unsubscribe': True}), from_email=settings.EMAIL_HOST_USER, bcc=subscribers)
+            msg.content_subtype = 'html'
+            msg.send()
             newsletter.sent = True
             newsletter.save()
         print('Complete!')
