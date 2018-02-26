@@ -5,6 +5,16 @@ from django.utils import timezone
 from tinymce.models import HTMLField
 
 
+class Attachment(models.Model):
+    file = models.FileField(upload_to='Newsletter')
+
+    def name(self):
+        return self.file.name.replace('Newsletter/', '')
+
+    def __str__(self):
+        return self.file.name
+
+
 class Newsletter(models.Model):
     body = HTMLField()
     created = models.DateTimeField(auto_now_add=True)
@@ -12,6 +22,7 @@ class Newsletter(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     sent = models.BooleanField(default=False)
     subject = models.CharField(max_length=255)
+    attachments = models.ManyToManyField(Attachment)
 
     def __str__(self):
         return self.subject

@@ -31,6 +31,20 @@
                         <div class="p-3" style="overflow:hidden;">
                             {{ newsletter.body | safe }}
                         </div>
+                        {% if newsletter.attachments.all %}
+                            <div class="px-3 pb-3">
+                                <u>
+                                    <i class="fa fa-paperclip"></i> Attachments
+                                </u>
+                                <br>
+                                {% for attachment in newsletter.attachments.all %}
+                                    {{ attachment.name }}
+                                    <a class="inline" href="/media/{{ attachment }}" target="_blank">view</a> |
+                                    <a class="inline" href="/media/{{ attachment }}" target="_blank" download>download</a>
+                                    <br>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}

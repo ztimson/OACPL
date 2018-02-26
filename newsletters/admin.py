@@ -1,8 +1,9 @@
 from django.contrib import admin
-from django.utils import timezone
 
-from OACPL import settings
-from .models import Newsletter, Subscriber
+from .models import Attachment, Newsletter, Subscriber
+
+
+admin.site.register(Attachment)
 
 
 @admin.register(Subscriber)
@@ -16,16 +17,17 @@ class SubscriberAdmin(admin.ModelAdmin):
 class NewsletterAdmin(admin.ModelAdmin):
     list_display = ['subject', 'created', 'publish']
     search_fields = ['subject', 'created', 'publish']
+    filter_horizontal = ['attachments']
 
     def get_form(self, request, obj=None, **kwargs):
         if obj:
-            self.fields = ['creator', 'subject', 'body', 'sent', 'publish']
+            self.fields = ['creator', 'subject', 'body', 'sent', 'publish', 'attachments']
             if obj.sent:
-                self.readonly_fields = ['creator', 'subject', 'body', 'sent', 'publish']
+                self.readonly_fields = ['creator', 'subject', 'body', 'sent', 'publish', 'attachments']
             else:
                 self.readonly_fields = ['creator', 'sent']
         else:
-            self.fields = ['subject', 'body', 'publish']
+            self.fields = ['subject', 'body', 'publish', 'attachments']
             self.readonly_fields = []
         return super(NewsletterAdmin, self).get_form(request, obj, **kwargs)
 
