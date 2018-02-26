@@ -25,7 +25,9 @@
                     <div id="newsletter-body-{{ release.id }}" class="bg-light-blue collapse">
                         <div class="p-3" style="overflow:hidden;">
                             {% for attachment in release.attachments.all %}
-                                <a class="inline" href="/media/{{ attachment }}" target="_blank" download>{{ attachment.name }}</a>
+                                {{ attachment.name }}
+                                <a class="inline" href="/media/{{ attachment }}" target="_blank">view</a> |
+                                <a class="inline" href="/media/{{ attachment }}" target="_blank" download>download</a>
                                 <br>
                             {% endfor %}
                         </div>
