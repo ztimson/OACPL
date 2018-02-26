@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'forum.apps.ForumConfig',
     'main.apps.MainConfig',
     'newsletters.apps.NewslettersConfig',
+    'newsroom',
     'tinymce',
     'widget_tweaks',
     'variables'
