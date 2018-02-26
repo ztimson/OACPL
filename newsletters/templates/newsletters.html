@@ -21,11 +21,10 @@
             {% endif %}
             {% for newsletter in newsletters %}
                 <div class="col-12 p-0 mb-3 bg-white newsletter">
-                    <div class="p-3 newsletter-header" data-toggle="collapse"
+                    <div class="p-3 newsletter-header" style="overflow:hidden" data-toggle="collapse"
                          data-target="#newsletter-body-{{ newsletter.id }}" aria-expanded="false"
                          aria-controls="newsletter-body-{{ newsletter.id }}">
-                        <h2>{{ newsletter.subject }}</h2>
-                        <span class="text-muted">By: {{ newsletter.creator }}</span>
+                        <h2 class="float-left">{{ newsletter.subject }}</h2>
                         <span class="text-muted float-right">{{ newsletter.publish }}</span>
                     </div>
                     <div id="newsletter-body-{{ newsletter.id }}" class="bg-light-blue collapse">
