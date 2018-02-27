@@ -8,6 +8,12 @@ from OACPL import settings
 from OACPL.utils import render_to_string
 
 
+class AttorneyForm(forms.ModelForm):
+    class Meta:
+        model = Attorney
+        fields = ['first_name', 'last_name', 'region', 'image', 'email', 'address', 'phone', 'website', 'call_to_bar', 'lso', 'biography']
+
+
 class RegisterForm(forms.ModelForm):
     def email_validator(self):
         if User.objects.filter(email=self).exists():
@@ -69,6 +75,9 @@ class RegisterForm(forms.ModelForm):
         # Create Auth
         auth = User.objects.create_user(user.email, first_name=user.first_name, last_name=user.last_name, email=user.email, password=self.cleaned_data['password1'])
         auth.save()
+
+        user.user = auth
+        user.save()
 
         # Add user to default Group
         default_group = Group.objects.filter(name='default').first()

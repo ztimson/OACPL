@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth.admin import User
 from django.db import models
 from django.utils import timezone
 
@@ -35,6 +36,7 @@ class Attorney(models.Model):
     phone = models.CharField(max_length=10)
     position = models.ForeignKey(Position, blank=True, null=True)
     website = models.CharField(max_length=255, blank=True, null=True)
+    user = models.ForeignKey(User, null=True, blank=True)
 
     def phone_formatted(self):
         if self.phone is None or self.phone == '': return ''

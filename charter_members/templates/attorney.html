@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 
 {% block body %}
     <div class="container-fluid">
@@ -14,10 +15,75 @@
             </div>
             <div class="col-lg-6 pt-3 bg-light-blue">
                 <div class="col-lg-6">
-                    <h2 class="d-none d-lg-inline text-dark-primary">{{ attorney.first_name }} {{ attorney.last_name }}</h2>
+                    <h2 class="d-none d-lg-inline text-dark-primary">
+                        {{ attorney.first_name }} {{ attorney.last_name }}
+                    </h2>
+                    {% if perms.charter_members.change_attorney or attorney.user == request.user %}
+                        <a href="#" data-toggle="modal" data-target="#editModal">Edit</a>
+                    {% endif %}
                     <p>{{ attorney.biography | safe }}</p>
                 </div>
             </div>
         </div>
     </div>
+
+    {% if perms.charter_members.change_attorney or attorney.user == request.user %}
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit Attorney Information</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="edit" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    Portrait
+                                    {{ editForm.image|add_class:"form-control" }}
+                                </div>
+                                <div class="form-group col-6">
+                                    {{ editForm.first_name|add_class:"form-control"|attr:"placeholder:First Name" }}
+                                </div>
+                                <div class="form-group col-6">
+                                    {{ editForm.last_name|add_class:"form-control"|attr:"placeholder:Last Name" }}
+                                </div>
+                                <div class="form-group col-6">
+                                    {{ editForm.password1|add_class:"form-control"|attr:"placeholder:Password" }}
+                                </div>
+                                <div class="form-group col-6">
+                                    {{ editForm.password2|add_class:"form-control"|attr:"placeholder:Confirm Password" }}
+                                </div>
+                                <div class="form-group col-6">
+                                    {{ editForm.phone|add_class:"form-control"|attr:"placeholder:Phone Number (No Formatting)" }}
+                                </div>
+                                <div class="form-group col-6">
+                                    {{ editForm.email|add_class:"form-control"|attr:"placeholder:Email" }}
+                                </div>
+                                <div class="form-group col-8">
+                                    {{ editForm.address|add_class:"form-control"|attr:"placeholder:Address" }}
+                                </div>
+                                <div class="form-group col-4">
+                                    {{ editForm.region|add_class:"form-control" }}
+                                </div>
+                                <div class="form-group col-12">
+                                    {{ editForm.website|add_class:"form-control"|attr:"placeholder:Website" }}
+                                </div>
+                                <div class="form-group col-12">
+                                    {{ editForm.biography|add_class:"form-control"|attr:"placeholder:Biography" }}
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" form="edit">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

@@ -2,11 +2,15 @@ from django.db.models import Count
 from django.shortcuts import render
 
 from .models import Region, Attorney
+from .forms import AttorneyForm
 
 
 def index(request, id):
     attorney = Attorney.objects.get(id=id)
-    return render(request, 'attorney.html', {'attorney': attorney})
+    edit_form = AttorneyForm(request.POST or None, request.FILES or None, instance=attorney)
+    if request.method == 'POST' and edit_form.is_valid():
+        edit_form.save()
+    return render(request, 'attorney.html', {'attorney': attorney, 'editForm': edit_form})
 
 
 def all(request):
