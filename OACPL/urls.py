@@ -11,6 +11,7 @@ import main.views
 import case_law.views
 import charter_members.views
 import expert_witnesses.views
+import events.views
 import forum.views
 import newsletters.views
 import newsroom.views
@@ -39,6 +40,8 @@ urlpatterns = [
     url(r'^contact/', main.views.contact, name='contact'),
     url(r'^experts/(?P<id>\d+)', expert_witnesses.views.viewer, name='expert'),
     url(r'^experts/', expert_witnesses.views.browser, name='experts'),
+    url(r'^events/register', events.views.register, name='register'),
+    url(r'^events/', events.views.view, name='events'),
     url(r'^forum/post/(?P<post>\d*)', forum.views.viewPost, name='post'),
     url(r'^forum/(?P<thread>\d*)?', forum.views.view, name='forum'),
     url(r'^login/', main.views.login, name='login'),

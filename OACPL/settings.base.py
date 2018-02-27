@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'bootstrap_admin',
     'case_law',
     'charter_members.apps.CharterMembersConfig',
+    'events',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

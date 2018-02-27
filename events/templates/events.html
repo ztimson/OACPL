@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.2/fullcalendar.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.2/fullcalendar.css" />
+
+    <script>
+        function register(id) {
+            $.ajax({
+                url: '{% url 'register' %}',
+                method: 'post',
+                data: {id: id}
+            }).done(function() {window.location += '?id=' + id})
+        }
+
+        $(function() {
+            $('[id^=details-]').hide();
+
+            if(window.location.search.indexOf('id=') != -1) {
+                var id = new RegExp(/id=(\d+)/).exec(window.location);
+                $('#details-' + id[1]).show();
+            }
+
+            $('#calendar').fullCalendar({
+                events: [
+                    {% for event in events %}
+                        {id: {{ event.id }}, title: '{{event.title}}', start: '{{event.date|date:'c'}}', backgroundColor: '#4ec8ff'},
+                    {% endfor %}
+                ],
+                eventClick: function(calEvent) {
+                    $('[id^=details-]').hide();
+                    $('#details-' + calEvent.id).show();
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid bg-dark-primary">
+    <div class="row p-3">
+        <div class="col-8 bg-white p-3 rounded">
+            <div id="calendar"></div>
+        </div>
+        <div class="col-4 pr-0">
+            <div class="ml-3 rounded bg-white h-100 p-3" style="position:relative">
+                {% for event in events %}
+                    <div id="details-{{ event.id }}" style="display:none">
+                        <h3>{% if event.attendees.all|length >= event.max_attendees %}<strong>(FULL)</strong>{% endif %} {{ event.title }}</h3>
+                        <h6 class="text-muted">{{ event.date }}</h6>
+                        <br>
+                        <h6><strong>Description:</strong></h6>
+                        <p>{{ event.description|safe }}</p>
+                        {% if event.location %}
+                            <h6><strong>Where:</strong> {{ event.location }}</h6>
+                        {% endif %}
+                        {% if event.cost %}
+                            <h6><strong>Cost: </strong> ${{ event.cost }}</h6>
+                        {% endif %}
+                        {% if event.attendees.all %}
+                            <h6><strong>Attendees ({{ event.attendees.all|length }}{% if event.max_attendees %}/{{ event.max_attendees }}{% endif %}):</strong></h6>
+                            {% for attendee in event.attendees.all %}
+                                {{attendee.name}},
+                            {% endfor %}
+                        {% endif %}
+                        {% if request.user.is_authenticated %}
+                            {% if not event.max_attendees or event.attendees.all|length < event.max_attendees %}
+                                <div class="fixed-bottom p-3" style="position:absolute">
+                                    <button class="btn btn-primary float-right" onclick="register({{ event.id }})">Register</button>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    </div>
+{% endblock %}
