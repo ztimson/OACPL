@@ -15,7 +15,7 @@ class Attachment(models.Model):
 class PressRelease(models.Model):
     title = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
-    creator = models.ForeignKey(User)
+    creator = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     attachments = models.ManyToManyField(Attachment)
 
     def __str__(self):

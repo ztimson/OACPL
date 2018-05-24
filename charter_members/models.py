@@ -24,7 +24,7 @@ class Attorney(models.Model):
     address = models.CharField(max_length=255)
     biography = HTMLField(blank=True, null=True)
     call_to_bar = models.CharField(max_length=4, blank=True, null=True)
-    region = models.ForeignKey(Region, blank=True, null=True)
+    region = models.ForeignKey(Region, blank=True, null=True, on_delete=models.DO_NOTHING)
     email = models.CharField(max_length=255)
     first_name = models.CharField(max_length=100)
     front_page = models.BooleanField(default=False)
@@ -34,9 +34,9 @@ class Attorney(models.Model):
     lso = models.CharField(max_length=20, blank= True, null=True)
     order = models.IntegerField(blank=True, null=True, verbose_name='Order On Front Page')
     phone = models.CharField(max_length=10)
-    position = models.ForeignKey(Position, blank=True, null=True)
+    position = models.ForeignKey(Position, blank=True, null=True, on_delete=models.DO_NOTHING)
     website = models.CharField(max_length=255, blank=True, null=True)
-    user = models.ForeignKey(User, null=True, blank=True)
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.DO_NOTHING)
 
     def phone_formatted(self):
         if self.phone is None or self.phone == '': return ''

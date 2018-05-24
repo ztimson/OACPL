@@ -12,10 +12,10 @@ class Thread(models.Model):
 
 
 class Post(models.Model):
-    creator = models.ForeignKey(User)
+    creator = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     created = models.DateTimeField(auto_now_add=True)
     resolved = models.BooleanField(default=False)
-    thread = models.ForeignKey(Thread)
+    thread = models.ForeignKey(Thread, on_delete=models.DO_NOTHING)
     title = models.CharField(max_length=255)
     question = HTMLField()
 
@@ -24,9 +24,9 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post)
+    post = models.ForeignKey(Post, on_delete=models.DO_NOTHING)
     reply = HTMLField()
-    creator = models.ForeignKey(User)
+    creator = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
