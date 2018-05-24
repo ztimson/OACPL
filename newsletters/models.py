@@ -22,7 +22,7 @@ class Newsletter(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     sent = models.BooleanField(default=False)
     subject = models.CharField(max_length=255)
-    attachments = models.ManyToManyField(Attachment, blank=True, null=True)
+    attachments = models.ManyToManyField(Attachment, blank=True)
 
     def __str__(self):
         return self.subject
