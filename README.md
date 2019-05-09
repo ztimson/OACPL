@@ -2,7 +2,7 @@
 
 [See Live](https://oacpl.org/)
 
-A website for the Ontario Ascociation of Child Protection Lawyers which not only acts as a landing page for the non-profit but also provides the following services:
+A Django website for the Ontario Ascociation of Child Protection Lawyers which not only acts as a landing page for the non-profit but also provides the following services:
  - Member enrollment
  - FAQ Forumn so the public can ask registered lawyers questions
  - Events with optional registration
