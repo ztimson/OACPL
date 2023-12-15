@@ -6,7 +6,6 @@ WORKDIR /site
 ADD . /site/
 
 # Set up configs
-RUN rm OACPL/settings.py
 RUN mv OACPL/settings.base.py OACPL/settings.py
 
 # Install packages
