@@ -1,13 +1,12 @@
-version: '3'
+version: '3.8'
 
 services:
-
   db:
     image: postgres
 
   web:
+    image: git.zakscode.com/ztimson/oacpl:latest
     build: .
-    command: python3 manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
     ports:

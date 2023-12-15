@@ -1,0 +1,14 @@
+name: Build
+run-name: Build
+
+on:
+  push:
+
+jobs:
+  publish:
+    name: Build & Push Dockerfile
+    uses: ztimson/actions/.github/workflows/docker.yaml@develop
+    with:
+      name: ztimson/oacpl
+      repository: ${{github.server_url}}/${{github.repository}}.git
+      pass: ${{secrets.DEPLOY_TOKEN}}
