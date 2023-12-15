@@ -9,7 +9,7 @@
   ### OACPL
 
   <!-- Description -->
-  Ontario Association of Child Protection Lawyers
+  **Deprecated:** Ontario Association of Child Protection Lawyers
 
   <!-- Repo badges -->
   [![Version](https://img.shields.io/badge/dynamic/json.svg?label=Version&style=for-the-badge&url=https://git.zakscode.com/api/v1/repos/ztimson/oacpl/tags&query=$[0].name)](https://git.zakscode.com/ztimson/oacpl/tags)
@@ -38,6 +38,8 @@
     - [License](#license)
 
 ## About
+
+**Deprecated**
 
 A Django website for the Ontario Ascociation of Child Protection Lawyers which not only acts as a landing page for the non-profit but also provides the following services:
 
